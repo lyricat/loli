@@ -4,7 +4,7 @@ Build-type:           Simple
 Synopsis:             loli
 Description:
         
-    A minimum web development DSL in Haskell
+    A minimum web dev DSL in Haskell
 
 License:              BSD3
 License-file:         LICENSE
