@@ -6,6 +6,7 @@ import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
 import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.Static
+import Hack.Contrib.Utils
 import Hack.Contrib.Response
 import MPS
 import Network.Loli.Config
@@ -46,7 +47,7 @@ io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
 captured :: AppUnitT [(String, String)]
-captured = ask ^ hackHeaders ^ filter_captured
+captured = ask ^ custom ^ filter_captured
   where
     filter_captured =
         select (fst > starts_with loli_captures_prefix)
