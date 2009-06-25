@@ -15,7 +15,6 @@ import MPS
 import Network.Loli.Config
 import Prelude hiding ((.), (/), (>), (^))
 
-
 type RoutePath = (RequestMethod, String, AppUnit)
 type EnvFilter = Env -> Env
 type ResponseFilter = Response -> Response
@@ -31,15 +30,14 @@ data AppState = AppState
 instance Default AppState where
   def = AppState def [id] [id] def
 
-type AppUnit = State AppState ()
+type AppUnit = StateT AppState IO ()
 
-run_app :: String -> AppUnit -> Application
-run_app path unit = 
-  let state = execState unit def {path}
-      before = state.env_filters.map config
+run_app :: String -> AppUnit -> IO Application
+run_app path unit = do
+  state <- execStateT unit def {path}
+  let before = state.env_filters.map config
       after = state.response_filters.map (to_io_filter > censor)
-  in
-  state.application.use (before ++ after)
+  return $ state.application.use (before ++ after)
   where
     to_io_filter f = \x -> return (f x)
 
@@ -54,8 +52,9 @@ router h app' = \env'' ->
   in
   case h.find (match_route env'') of
     Nothing -> app' env''
-    Just (_, location, app_state) -> 
-      run_app location app_state (mod_env location)
+    Just (_, location, app_state) -> do
+      my_app <- run_app location app_state
+      my_app (mod_env location)
   where
     match_route env' (method, path, _) = 
       env'.request_method.is method && env'.path_info.starts_with path
