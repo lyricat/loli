@@ -15,8 +15,7 @@ import qualified Control.Monad.State as State
 
 
 app :: Application -> AppUnit
-app f = do
-  ask >>= (f > io) >>= State.put
+app f = ask >>= (f > io) >>= State.put
 
 text :: String -> AppUnit
 text x = do
