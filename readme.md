@@ -6,7 +6,7 @@
     main = run . loli $ do
 
       get "/hello"    (text "hello world")
-      get "/cabal"    $ io (readFile "loli.cabal") >>= text
+      get "/cabal"    $ text =<< io (readFile "loli.cabal")
       get "/"         (html "<html><body><p>loli power!</p></body></html>")
 
       public (Just ".") ["/src"]
