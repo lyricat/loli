@@ -28,3 +28,7 @@
       
       -- treat .hs extension as text/plain
       mime "hs" "text/plain"
+
+### Note
+
+If you see this, use the git version! I can't bombard hackage like a spam, but like any new project, code / design evolves fast. So use the git version whenever possible.
