@@ -1,0 +1,25 @@
+nemesis = do
+  
+  clean
+    [ "**/*.hi"
+    , "**/*.o"
+    , "manifest"
+    ]
+    
+  desc "prepare cabal dist"
+  task "dist" $ do
+    sh "cabal clean"
+    sh "cabal configure"
+    sh "cabal sdist"
+
+  desc "start console"
+  task "i" (sh "ghci -isrc src/Test.hs")
+
+  desc "put all .hs files in manifest"
+  task "manifest" $ do
+    sh "find . | grep 'hs$' > manifest"
+
+  task "test" $ do
+    sh "ghc --make -isrc src/Test.hs -o Test"
+    sh "echo done.."
+    sh "./Test"
