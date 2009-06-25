@@ -12,7 +12,6 @@ import Hack.Contrib.Response
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
-import Network.Loli.Config
 import Prelude hiding ((.), (/), (>), (^))
 
 type RoutePath = (RequestMethod, String, AppUnit)
