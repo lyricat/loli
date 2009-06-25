@@ -1,6 +1,6 @@
 module Network.Loli.DSL where
 
-
+import Control.Monad.State
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
 import Hack.Contrib.Constants
@@ -8,22 +8,24 @@ import Hack.Contrib.Middleware.Static
 import Hack.Contrib.Response
 import MPS
 import Network.Loli.Engine
+import Network.Loli.Config
 import Prelude hiding ((.), (>), (^))
-import Control.Monad.State
+import qualified Control.Monad.State as State
 
 
 app :: Application -> AppUnit
-app = set_application > update
+app f = do
+  get_env >>= (f > io) >>= set_response
 
 text :: String -> AppUnit
 text x = do
-  response $ set_content_type _TextPlain
-  response $ set_body (x.fromString)
+  update_response $ set_content_type _TextPlain
+  update_response $ set_body (x.fromString)
 
 html :: String -> AppUnit
 html x = do
-  response $ set_content_type _TextHtml
-  response $ set_body (x.fromString)
+  update_response $ set_content_type _TextHtml
+  update_response $ set_body (x.fromString)
 
 get, put, delete, post :: String -> AppUnit -> Unit
 get    = route GET
@@ -42,3 +44,11 @@ public r xs = middleware $ static r xs
 
 io :: (MonadIO m) => IO a -> m a
 io = liftIO
+
+captured :: AppUnitT [(String, String)]
+captured = get_env ^ hackHeaders ^ filter_captured
+  where
+    filter_captured =
+        select (fst > starts_with loli_captures_prefix)
+      > map_fst (drop (loli_captures_prefix.length))
+      

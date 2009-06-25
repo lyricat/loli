@@ -13,3 +13,6 @@ pre_installed_middlewares =
   where
     default_content_type :: String
     default_content_type = "text/plain; charset=UTF-8"
+    
+loli_captures_prefix :: String
+loli_captures_prefix = "loli_captures_"

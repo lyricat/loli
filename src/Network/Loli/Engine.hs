@@ -2,16 +2,16 @@
 
 module Network.Loli.Engine where
 
-import Control.Monad.State
+import Control.Monad.State hiding (join)
 import Data.Default
 import Data.List (find)
+import Data.Maybe
 import Hack
-import Hack.Contrib.Middleware.Censor
-import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.NotFound
 import Hack.Contrib.Response
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
+import Network.Loli.Config
 import Network.Loli.Config
 import Prelude hiding ((.), (/), (>), (^))
 
@@ -21,25 +21,18 @@ type ResponseFilter = Response -> Response
 type Param = (String, String)
 data AppState = AppState
   {
-    application :: Application
-  , env_filters :: [EnvFilter]
-  , response_filters :: [ResponseFilter]
-  , path :: String
+    env :: Env
+  , response :: Response
   }
 
 instance Default AppState where
-  def = AppState def [id] [id] def
+  def = AppState def def
 
-type AppUnit = StateT AppState IO ()
+type AppUnitT a = StateT AppState IO a
+type AppUnit = AppUnitT ()
 
-run_app :: String -> AppUnit -> IO Application
-run_app path unit = do
-  state <- execStateT unit def {path}
-  let before = state.env_filters.map config
-      after = state.response_filters.map (to_io_filter > censor)
-  return $ state.application.use (before ++ after)
-  where
-    to_io_filter f = \x -> return (f x)
+run_app :: AppUnit -> Application
+run_app unit = \env -> execStateT unit def {env} ^ response
 
 router :: [RoutePath] -> Middleware
 router h app' = \env'' ->
@@ -52,13 +45,44 @@ router h app' = \env'' ->
   in
   case h.find (match_route env'') of
     Nothing -> app' env''
-    Just (_, location, app_state) -> do
-      my_app <- run_app location app_state
-      my_app (mod_env location)
+    Just (_, template, app_state) -> do
+      let (location, params) = parse_params template path .fromJust
+      run_app app_state (mod_env location .merge_captured params)
   where
-    match_route env' (method, path, _) = 
-      env'.request_method.is method && env'.path_info.starts_with path
+    match_route env' (method, template, _) = 
+      env'.request_method.is method 
+        && env'.path_info.parse_params template .isJust
+    merge_captured params env' =
+      let loli_captures = params.map_fst (loli_captures_prefix ++)
+          new_hack_headers = env'.custom ++ loli_captures
+      in
+      env' {hackHeaders = new_hack_headers}
+      
 
+parse_params :: String -> String -> Maybe (String, [(String, String)])
+parse_params t s =
+  let template_tokens = t.split "/"
+      url_tokens = s.split "/"
+  in
+  if url_tokens.length < template_tokens.length
+    then Nothing
+    else 
+      let rs = zipWith capture template_tokens url_tokens
+      in
+      if rs.all isJust
+        then 
+          let location = url_tokens.take (template_tokens.length).join "/"
+          in
+          Just $ (location, rs.map fromJust.filter isJust.map fromJust)
+        else Nothing
+  
+  where
+    capture x y 
+      | x.starts_with ":" = Just $ Just (x.tail, y)
+      | x == y = Just Nothing
+      | otherwise = Nothing
+    
+  
 
 data Loli = Loli
   {
@@ -70,7 +94,8 @@ data Loli = Loli
 instance Default Loli where
   def = Loli def def def
 
-type Unit = State Loli ()
+type UnitT a = State Loli a
+type Unit = UnitT ()
 
 
 
@@ -88,9 +113,6 @@ loli unit = run unit (not_found empty_app)
           pre         = pre_installed_middlewares.use
       in
       use [pre, mime_filter, stack, loli_app]
-
-set_application :: Application -> AppState -> AppState
-set_application application x = x { application }
 
 update :: (MonadState a m, Functor m) => (a -> a) -> m ()
 update f = get ^ f >>= put
@@ -111,21 +133,20 @@ add_middleware x s =
 add_mime :: String -> String -> Loli -> Loli
 add_mime k v s = let xs = s.mimes in s {mimes = xs.insert_last (k, v)}
 
-add_env_filter :: EnvFilter -> AppState -> AppState
-add_env_filter x s = 
-  let xs = s.env_filters in s {env_filters = xs.insert_last x}
+update_response :: ResponseFilter -> AppUnit
+update_response f = update $ \s -> let x = s.response.f in s {response = x}
 
-add_response_filter :: ResponseFilter -> AppState -> AppState
-add_response_filter x s = 
-  let xs = s.response_filters in s {response_filters = xs.insert_last x}
+set_response :: Response -> AppUnit
+set_response r = update_response $ const r
 
+get_response :: AppUnitT Response
+get_response = get ^ response
 
-request :: EnvFilter-> AppUnit
-request x = add_env_filter x .update
+update_env :: EnvFilter -> AppUnit
+update_env f = update $ \s -> let x = s.env.f in s {env = x}
 
-response :: ResponseFilter -> AppUnit
-response x = add_response_filter x .update
-
+get_env :: AppUnitT Env
+get_env = get ^ env
 
 -- middleware
 lookup_mime :: [(String, String)] -> Middleware
