@@ -3,6 +3,7 @@
 module Network.Loli.Engine where
 
 import Control.Monad.State hiding (join)
+import Control.Monad.Reader hiding (join)
 import Data.Default
 import Data.List (find)
 import Data.Maybe
@@ -18,20 +19,14 @@ type RoutePath = (RequestMethod, String, AppUnit)
 type EnvFilter = Env -> Env
 type ResponseFilter = Response -> Response
 type Param = (String, String)
-data AppState = AppState
-  {
-    env :: Env
-  , response :: Response
-  }
+type AppState = Response
+type AppReader = Env
 
-instance Default AppState where
-  def = AppState def def
-
-type AppUnitT a = StateT AppState IO a
+type AppUnitT a = ReaderT AppReader (StateT AppState IO) a
 type AppUnit = AppUnitT ()
 
 run_app :: AppUnit -> Application
-run_app unit = \env -> execStateT unit def {env} ^ response
+run_app unit = \env -> runReaderT unit env .flip execStateT def
 
 router :: [RoutePath] -> Middleware
 router h app' = \env'' ->
@@ -132,20 +127,14 @@ add_middleware x s =
 add_mime :: String -> String -> Loli -> Loli
 add_mime k v s = let xs = s.mimes in s {mimes = xs.insert_last (k, v)}
 
-update_response :: ResponseFilter -> AppUnit
-update_response f = update $ \s -> let x = s.response.f in s {response = x}
-
 set_response :: Response -> AppUnit
-set_response r = update_response $ const r
+set_response r = update $ const r
 
 get_response :: AppUnitT Response
-get_response = get ^ response
-
-update_env :: EnvFilter -> AppUnit
-update_env f = update $ \s -> let x = s.env.f in s {env = x}
+get_response = get
 
 get_env :: AppUnitT Env
-get_env = get ^ env
+get_env = ask
 
 -- middleware
 lookup_mime :: [(String, String)] -> Middleware

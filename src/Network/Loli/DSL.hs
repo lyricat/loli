@@ -19,13 +19,13 @@ app f = do
 
 text :: String -> AppUnit
 text x = do
-  update_response $ set_content_type _TextPlain
-  update_response $ set_body (x.fromString)
+  update $ set_content_type _TextPlain
+  update $ set_body (x.fromString)
 
 html :: String -> AppUnit
 html x = do
-  update_response $ set_content_type _TextHtml
-  update_response $ set_body (x.fromString)
+  update $ set_content_type _TextHtml
+  update $ set_body (x.fromString)
 
 get, put, delete, post :: String -> AppUnit -> Unit
 get    = route GET
