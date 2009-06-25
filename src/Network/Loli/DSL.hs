@@ -1,5 +1,6 @@
 module Network.Loli.DSL where
 
+import Control.Monad.Reader
 import Control.Monad.State
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
@@ -7,15 +8,15 @@ import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.Static
 import Hack.Contrib.Response
 import MPS
-import Network.Loli.Engine
 import Network.Loli.Config
+import Network.Loli.Engine
 import Prelude hiding ((.), (>), (^))
 import qualified Control.Monad.State as State
 
 
 app :: Application -> AppUnit
 app f = do
-  get_env >>= (f > io) >>= set_response
+  ask >>= (f > io) >>= State.put
 
 text :: String -> AppUnit
 text x = do
@@ -46,7 +47,7 @@ io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
 captured :: AppUnitT [(String, String)]
-captured = get_env ^ hackHeaders ^ filter_captured
+captured = ask ^ hackHeaders ^ filter_captured
   where
     filter_captured =
         select (fst > starts_with loli_captures_prefix)

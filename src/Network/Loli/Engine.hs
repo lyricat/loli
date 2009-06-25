@@ -2,8 +2,8 @@
 
 module Network.Loli.Engine where
 
-import Control.Monad.State hiding (join)
 import Control.Monad.Reader hiding (join)
+import Control.Monad.State hiding (join)
 import Data.Default
 import Data.List (find)
 import Data.Maybe
@@ -92,7 +92,6 @@ type UnitT a = State Loli a
 type Unit = UnitT ()
 
 
-
 loli :: Unit -> Application
 loli unit = run unit (not_found empty_app)
   where
@@ -126,15 +125,6 @@ add_middleware x s =
 
 add_mime :: String -> String -> Loli -> Loli
 add_mime k v s = let xs = s.mimes in s {mimes = xs.insert_last (k, v)}
-
-set_response :: Response -> AppUnit
-set_response r = update $ const r
-
-get_response :: AppUnitT Response
-get_response = get
-
-get_env :: AppUnitT Env
-get_env = ask
 
 -- middleware
 lookup_mime :: [(String, String)] -> Middleware
