@@ -6,7 +6,6 @@ import Prelude hiding ((.), (>), (^))
 import Network.Loli.Engine
 import Hack
 import Hack.Contrib.Constants
-import Hack.Contrib.Utils hiding (use, get)
 import Hack.Contrib.Response
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack.Contrib.Middleware.Static
@@ -24,6 +23,7 @@ html x = do
   response $ set_content_type _TextHtml
   response $ set_body (x.fromString)
 
+get, put, delete, post :: String -> AppUnit -> Unit
 get    = route GET
 put    = route PUT
 delete = route DELETE

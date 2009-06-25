@@ -5,18 +5,18 @@ module Network.Loli.Engine where
 import Control.Monad.State
 import Data.Default
 import Data.List (find)
-import Data.Maybe
 import Hack
 import Hack.Contrib.Middleware.Censor
 import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.NotFound
-import Hack.Contrib.Utils hiding (get, put)
 import Hack.Contrib.Response
+import Hack.Contrib.Utils hiding (get, put)
 import MPS
+import Network.Loli.Config
 import Prelude hiding ((.), (/), (>), (^))
 
-type RoutePath = (RequestMethod, String, AppUnit)
 
+type RoutePath = (RequestMethod, String, AppUnit)
 type EnvFilter = Env -> Env
 type ResponseFilter = Response -> Response
 type Param = (String, String)
@@ -79,15 +79,16 @@ loli :: Unit -> Application
 loli unit = run unit (not_found empty_app)
   where
     run :: Unit -> Middleware
-    run unit = 
-      let s           = execState unit def
+    run unit' = 
+      let s           = execState unit' def
           paths       = s.routes
           
           loli_app    = router paths
           mime_filter = lookup_mime (s.mimes)
           stack       = s.middlewares.use
+          pre         = pre_installed_middlewares.use
       in
-      use [mime_filter, stack, loli_app]
+      use [pre, mime_filter, stack, loli_app]
 
 set_application :: Application -> AppState -> AppState
 set_application application x = x { application }
