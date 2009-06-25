@@ -31,4 +31,4 @@
 
 ### Note
 
-If you see this, use the git version! I can't bombard hackage like a spam, but like any new project, code / design evolves fast. So use the git version whenever possible, as the git version will always be more stable then the hackage version ... ( I fix bugs constantly )
+If you see this, use the git version!
