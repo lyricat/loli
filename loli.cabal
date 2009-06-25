@@ -1,10 +1,10 @@
 Name:                 loli
 Version:              2009.6.25
 Build-type:           Simple
-Synopsis:             loli
+Synopsis:             A minimum web dev DSL in Haskell
 Description:
-        
-    A minimum web dev DSL in Haskell
+    
+    A simple and easy to use library for fast web prototyping in Haskell.
 
 License:              BSD3
 License-file:         LICENSE
