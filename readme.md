@@ -5,9 +5,9 @@
 
     main = run . loli $ do
 
-      get "/hello" (text "hello world")
-      get "/" (html "<html><body><p>loli power!</p></body></html>")
+      get "/hello"    (text "hello world")
+      get "/cabal"    $ io (readFile "loli.cabal") >>= text
+      get "/"         (html "<html><body><p>loli power!</p></body></html>")
 
       public (Just ".") ["/src"]
-
       mime "hs" "text/plain"

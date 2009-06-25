@@ -1,14 +1,16 @@
 module Network.Loli.DSL where
 
 
-import MPS
-import Prelude hiding ((.), (>), (^))
-import Network.Loli.Engine
+import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
 import Hack.Contrib.Constants
-import Hack.Contrib.Response
-import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack.Contrib.Middleware.Static
+import Hack.Contrib.Response
+import MPS
+import Network.Loli.Engine
+import Prelude hiding ((.), (>), (^))
+import Control.Monad.State
+
 
 app :: Application -> AppUnit
 app = set_application > update
@@ -37,3 +39,6 @@ mime k v = add_mime k v .update
 
 public :: Maybe String -> [String] -> Unit
 public r xs = middleware $ static r xs
+
+io :: (MonadIO m) => IO a -> m a
+io = liftIO
