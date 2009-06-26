@@ -42,11 +42,11 @@ check: <http://localhost:3000>
       -- ..
 ### Captures
 
-    get "/say/:user/:something" $ do
+    get "/say/:user/:message" $ do
       text . show =<< captures
 
     -- /say/jinjing/hello will output
-    -- [("user","jinjing"),("something","hello")]
+    -- [("user","jinjing"),("message","hello")]
 
 
 ## Static

@@ -18,7 +18,7 @@ main = run . loli $ do
   get "/cabal"    $ text =<< io (readFile "loli.cabal")
 
   -- route captures
-  get "/say/:user/:something" $ do
+  get "/say/:user/:message" $ do
     text . show =<< captures
 
   -- html output
