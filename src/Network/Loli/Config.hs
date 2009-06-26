@@ -1,9 +1,9 @@
 module Network.Loli.Config where
 
 import Hack
+import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.ContentLength
 import Hack.Contrib.Middleware.ContentType
-import Hack.Contrib.Middleware.Config
 import MPS.Light
 import Prelude hiding ((.), (>), (^))
 

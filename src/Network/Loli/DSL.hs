@@ -5,9 +5,9 @@ import Control.Monad.State
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
 import Hack.Contrib.Constants
+import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.Static
 import Hack.Contrib.Response
-import Hack.Contrib.Middleware.Config
 import MPS
 import Network.Loli.Config
 import Network.Loli.Engine

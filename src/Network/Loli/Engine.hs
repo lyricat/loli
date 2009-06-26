@@ -13,8 +13,8 @@ import Hack.Contrib.Response
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
-import Prelude hiding ((.), (/), (>), (^))
 import Network.Loli.Utils
+import Prelude hiding ((.), (/), (>), (^))
 
 type RoutePath = (RequestMethod, String, AppUnit)
 type EnvFilter = Env -> Env
@@ -51,6 +51,7 @@ router h app' = \env'' ->
       env'.set_namespace loli_captures params 
 
 parse_params :: String -> String -> Maybe (String, [(String, String)])
+parse_params "/" s = Just (s, [])
 parse_params t s =
   let template_tokens = t.split "/"
       url_tokens = s.split "/"
@@ -83,7 +84,7 @@ data Loli = Loli
   }
 
 instance Default Loli where
-  def = Loli def def def
+  def = Loli def [dummy_middleware] def
 
 type UnitT a = State Loli a
 type Unit = UnitT ()

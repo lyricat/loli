@@ -30,3 +30,9 @@ nemesis = do
     
 
   task "template" $ sh "ghci -isrc src/Network/Loli/Template.hs"
+  
+  task "loli" $ do
+    sh "ghc --make -isrc src/Test/myloli.hs -o myloli"
+    sh "echo done.."
+    sh "./myloli"
+  

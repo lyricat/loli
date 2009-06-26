@@ -26,4 +26,5 @@ library
                       Network.Loli.DSL
                       Network.Loli.Engine
                       Network.Loli.Template
+                      Network.Loli.Template.TextTemplate
                       Network.Loli.Utils

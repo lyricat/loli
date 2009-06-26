@@ -1,37 +1,90 @@
-### Example
+# loli
 
+A minimum web dev DSL
+
+## Teaser
+
+First web app
+
+    # myloli.hs
     import Network.Loli
     import Hack.Handler.Happstack
     
-    -- default on port 3000
+    main = run . loli $ get "/" (text "loli power")
+
+Install and compile:
+
+    cabal update
+    cabal install loli
+    cabal install hack-handler-happstack
     
-    main = run . loli $ do
+    ghc --make myloli.hs
+    ./myloli
 
-      -- simple
-      get "/hello"    (text "hello world")
+check: <http://localhost:3000>
+
+
+## Routes
+
+### Verb
+
+    get "/" $ do
+      -- something for a get request
       
-      -- io
-      get "/cabal"    $ text =<< io (readFile "loli.cabal")
 
-      -- route captures
-      get "/say/:user/:verb" $ do
-        text . show =<< captured
+    post "/" $ do
+      -- for a post request
+    
+    put "/" $ do
+      -- put ..
+    
+    delet "/" $ do
+      -- ..
+### Captures
 
-      -- html output
-      get "/html"     (html "<html><body><p>loli power!</p></body></html>")
-      
-      -- template
-      get "/hi/:user"       
+    get "/say/:user/:something" $ do
+      text . show =<< captures
 
-      -- default
-      get "/"         (text "at root")
+    -- /say/jinjing/hello will output
+    -- [("user","jinjing"),("something","hello")]
 
-      -- public serve, only allows /src
-      public (Just ".") ["/src"]
-      
-      -- treat .hs extension as text/plain
-      mime "hs" "text/plain"
 
-### Note
+## Static
+
+    -- public serve, only allows /src
+    public (Just ".") ["/src"]
+
+## Views
+
+    -- in `./views`, can be changed by
+    views "template"
+
+### TextTemplate
+
+    import Network.Loli.Template.TextTemplate
+    
+    -- template
+    get "/hi/:user" $ text_template "hello.html"
+
+note route captures will be automatically passed to templates.
+
+### Local bindings
+
+    get "/local-binding" $ do
+      bind "user" "alice" (text_template "hello.html")
+
+### Batched local bindings
+
+    get "/batched-local-binding" $ do
+      context [("user", "alice"), ("password", "foo")] $ 
+        text . show =<< bindings
+
+
+## Mime types
+
+    -- treat .hs extension as text/plain
+    mime "hs" "text/plain"
+
+## Note
 
 If you see this, use the git version!
