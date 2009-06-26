@@ -108,9 +108,6 @@ loli unit = run unit (not_found empty_app)
       in
       use [pre, mime_filter, stack, loli_app]
 
-update :: (MonadState a m, Functor m) => (a -> a) -> m ()
-update f = get ^ f >>= put
-
 add_route :: RoutePath -> Loli -> Loli
 add_route r s = let xs = s.routes in s {routes = xs.insert_last r}
 

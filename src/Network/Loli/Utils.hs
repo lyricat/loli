@@ -1,9 +1,10 @@
 module Network.Loli.Utils where
 
 import Hack
-import Hack.Contrib.Utils
+import Hack.Contrib.Utils hiding (get, put)
 import MPS.Light
 import Prelude hiding ((.), (/), (>), (^))
+import Control.Monad.State
 
 namespace :: String -> Env -> [(String, String)]
 namespace x env =
@@ -27,3 +28,6 @@ add_namespace x k v = set_namespace x [(k,v)]
 
 insert_last :: a -> [a] -> [a]
 insert_last x xs = xs ++ [x]
+
+update :: (MonadState a m, Functor m) => (a -> a) -> m ()
+update f = get ^ f >>= put

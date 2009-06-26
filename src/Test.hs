@@ -1,9 +1,11 @@
-import Network.Loli
-import Hack.Handler.Happstack
 import Hack.Contrib.Response
 import Hack.Contrib.Utils (dummy_middleware)
-import Network.Loli.Template.TextTemplate
+import Hack.Handler.Happstack
+import Network.Loli
 import Network.Loli.Engine
+import Network.Loli.Template.TextTemplate
+import Network.Loli.Utils
+
 
 -- default on port 3000
 
