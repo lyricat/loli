@@ -1,4 +1,4 @@
-module Network.Loli.Template.TextTemplate where
+module Network.Loli.Template.TextTemplate (text_template) where
 
 import Control.Arrow ((***))
 import Data.ByteString.Lazy.UTF8 (fromString)
@@ -9,7 +9,6 @@ import Prelude hiding ((.), (>), (^), (/))
 import Text.Template hiding (Context, Template, template)
 import qualified Data.ByteString.Lazy.Char8 as B
 import qualified Data.Map as Map
-
 
 create_context :: [(String, String)] -> Map.Map B.ByteString B.ByteString
 create_context = map (fromString *** fromString) > to_h

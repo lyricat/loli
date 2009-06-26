@@ -16,15 +16,17 @@ import Network.Loli.Config
 import Network.Loli.Utils
 import Prelude hiding ((.), (/), (>), (^))
 
-type RoutePath = (RequestMethod, String, AppUnit)
-type EnvFilter = Env -> Env
-type ResponseFilter = Response -> Response
-type Param = (String, String)
-type AppState = Response
-type AppReader = Env
 
-type AppUnitT a = ReaderT AppReader (StateT AppState IO) a
-type AppUnit = AppUnitT ()
+type RoutePath      = (RequestMethod, String, AppUnit)
+type EnvFilter      = Env -> Env
+type ResponseFilter = Response -> Response
+type Param          = (String, String)
+type AppState       = Response
+type AppReader      = Env
+
+type AppUnitT a     = ReaderT AppReader (StateT AppState IO) a
+type AppUnit        = AppUnitT ()
+
 
 run_app :: AppUnit -> Application
 run_app unit = \env -> runReaderT unit env .flip execStateT def
@@ -87,7 +89,8 @@ instance Default Loli where
   def = Loli def [dummy_middleware] def
 
 type UnitT a = State Loli a
-type Unit = UnitT ()
+type Unit    = UnitT ()
+
 
 
 loli :: Unit -> Application

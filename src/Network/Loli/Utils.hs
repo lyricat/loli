@@ -16,7 +16,8 @@ set_namespace :: String -> [(String, String)] -> Env -> Env
 set_namespace x xs env = 
   let adds = xs.map_fst (x ++)
       new_headers = adds.map fst
-      new_hack_headers = env.custom.reject (fst > belongs_to new_headers) ++ adds
+      new_hack_headers = 
+        env.custom.reject (fst > belongs_to new_headers) ++ adds
   in
   env {hackHeaders = new_hack_headers}
 

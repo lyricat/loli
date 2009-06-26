@@ -15,7 +15,6 @@ import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^))
 import qualified Control.Monad.State as State
 
-
 app :: Application -> AppUnit
 app f = ask >>= (f > io) >>= State.put
 

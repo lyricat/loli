@@ -59,7 +59,7 @@ check: <http://localhost:3000>
     -- in `./views`, can be changed by
     views "template"
 
-### TextTemplate
+### Text Template
 
     import Network.Loli.Template.TextTemplate
     

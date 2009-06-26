@@ -4,6 +4,8 @@ nemesis = do
     [ "**/*.hi"
     , "**/*.o"
     , "manifest"
+    , "Test"
+    , "myloli"
     ]
     
   desc "prepare cabal dist"

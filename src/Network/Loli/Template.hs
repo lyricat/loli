@@ -9,7 +9,6 @@ import Network.Loli.DSL
 import Network.Loli.Engine
 import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^), (/))
-import qualified Control.Monad.State as State
 import qualified Data.ByteString.Lazy.Char8 as B
 
 
