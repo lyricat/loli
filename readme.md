@@ -2,11 +2,12 @@
 
 A minimum web dev DSL
 
-## Teaser
+## Example
 
 First web app
 
-    # myloli.hs
+    -- myloli.hs
+    
     import Network.Loli
     import Hack.Handler.Happstack
     
@@ -30,7 +31,6 @@ check: <http://localhost:3000>
 
     get "/" $ do
       -- something for a get request
-      
 
     post "/" $ do
       -- for a post request
@@ -38,7 +38,7 @@ check: <http://localhost:3000>
     put "/" $ do
       -- put ..
     
-    delet "/" $ do
+    delete "/" $ do
       -- ..
 ### Captures
 
@@ -65,6 +65,14 @@ check: <http://localhost:3000>
     
     -- template
     get "/hi/:user" $ text_template "hello.html"
+    
+    -- in hello.html
+    <html>
+    <title>hello</title>
+    <body>
+      <p>hello $user</p>
+    </body>
+    </html>
 
 note route captures will be automatically passed to templates.
 
