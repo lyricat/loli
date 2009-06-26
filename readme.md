@@ -4,7 +4,7 @@ A minimum web dev DSL
 
 ## Example
 
-First web app
+First app
 
     -- myloli.hs
     
@@ -73,8 +73,6 @@ check: <http://localhost:3000>
       <p>hello $user</p>
     </body>
     </html>
-
-note route captures will be automatically passed to templates.
 
 ### Local bindings
 
