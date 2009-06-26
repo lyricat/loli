@@ -23,3 +23,7 @@ nemesis = do
     sh "ghc --make -isrc src/Test.hs -o Test"
     sh "echo done.."
     sh "./Test"
+    
+  desc "show sloc"
+  task "stat" $ do
+    sh "cloc -match-f=hs$ --quiet src"
