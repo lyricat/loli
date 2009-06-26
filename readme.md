@@ -19,6 +19,9 @@
 
       -- html output
       get "/html"     (html "<html><body><p>loli power!</p></body></html>")
+      
+      -- template
+      get "/hi/:user"       
 
       -- default
       get "/"         (text "at root")

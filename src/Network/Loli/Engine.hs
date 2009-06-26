@@ -14,6 +14,7 @@ import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
 import Prelude hiding ((.), (/), (>), (^))
+import Network.Loli.Utils
 
 type RoutePath = (RequestMethod, String, AppUnit)
 type EnvFilter = Env -> Env
@@ -46,12 +47,8 @@ router h app' = \env'' ->
     match_route env' (method, template, _) = 
       env'.request_method.is method 
         && env'.path_info.parse_params template .isJust
-    merge_captured params env' =
-      let loli_captures = params.map_fst (loli_captures_prefix ++)
-          new_hack_headers = env'.custom ++ loli_captures
-      in
-      env' {hackHeaders = new_hack_headers}
-      
+    merge_captured params env' = 
+      env'.set_namespace loli_captures params 
 
 parse_params :: String -> String -> Maybe (String, [(String, String)])
 parse_params t s =
@@ -109,9 +106,6 @@ loli unit = run unit (not_found empty_app)
 
 update :: (MonadState a m, Functor m) => (a -> a) -> m ()
 update f = get ^ f >>= put
-
-insert_last :: a -> [a] -> [a]
-insert_last x xs = xs ++ [x]
 
 add_route :: RoutePath -> Loli -> Loli
 add_route r s = let xs = s.routes in s {routes = xs.insert_last r}

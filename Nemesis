@@ -26,4 +26,7 @@ nemesis = do
     
   desc "show sloc"
   task "stat" $ do
-    sh "cloc -match-f=hs$ --quiet src"
+    sh "cloc -match-f=hs$ --quiet src --no3"
+    
+
+  task "template" $ sh "ghci -isrc src/Network/Loli/Template.hs"

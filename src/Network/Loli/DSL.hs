@@ -6,11 +6,12 @@ import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
 import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.Static
-import Hack.Contrib.Utils
 import Hack.Contrib.Response
+import Hack.Contrib.Middleware.Config
 import MPS
 import Network.Loli.Config
 import Network.Loli.Engine
+import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^))
 import qualified Control.Monad.State as State
 
@@ -27,6 +28,9 @@ html :: String -> AppUnit
 html x = do
   update $ set_content_type _TextHtml
   update $ set_body (x.fromString)
+
+views :: String -> Unit
+views x = middleware $ config (set_namespace loli_views [("root", x)])
 
 get, put, delete, post :: String -> AppUnit -> Unit
 get    = route GET
@@ -46,10 +50,12 @@ public r xs = middleware $ static r xs
 io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
-captured :: AppUnitT [(String, String)]
-captured = ask ^ custom ^ filter_captured
-  where
-    filter_captured =
-        select (fst > starts_with loli_captures_prefix)
-      > map_fst (drop (loli_captures_prefix.length))
-      
+context :: [(String, String)] -> AppUnit -> AppUnit
+context = set_namespace loli_bindings > local
+
+bind :: String -> String -> AppUnit -> AppUnit
+bind k v = context [(k, v)]
+
+captures, bindings :: AppUnitT [(String, String)]
+captures = ask ^ namespace loli_captures
+bindings = ask ^ namespace loli_bindings

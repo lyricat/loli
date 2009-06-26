@@ -5,5 +5,5 @@ module Network.Loli
 )
 where
 
-import Network.Loli.Engine
+import Network.Loli.Engine (loli)
 import Network.Loli.DSL
