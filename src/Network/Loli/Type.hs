@@ -6,7 +6,8 @@ import Data.Default
 import Hack
 import Hack.Contrib.Utils
 
-type RoutePath      = (RequestMethod, String, AppUnit)
+type RoutePathT a   = (RequestMethod, String, a)
+type RoutePath      = RoutePathT AppUnit
 type EnvFilter      = Env -> Env
 type ResponseFilter = Response -> Response
 type Assoc          = [(String, String)]
