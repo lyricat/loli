@@ -8,4 +8,4 @@ instance Template ConstTemplate where
   interpolate (ConstTemplate x) _ _ = return x
 
 const_template :: String -> ConstTemplate
-const_template x = ConstTemplate x
+const_template = ConstTemplate

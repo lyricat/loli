@@ -20,7 +20,7 @@ render_TextTemplate x c =
 data TextTemplate = TextTemplate String
 
 instance Template TextTemplate where
-  interpolate (TextTemplate x) r c = render_TextTemplate (r ++ x) c
+  interpolate (TextTemplate x) r = render_TextTemplate (r ++ x)
 
 text_template :: String -> TextTemplate
-text_template x = TextTemplate x
+text_template = TextTemplate
