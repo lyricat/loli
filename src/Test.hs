@@ -1,6 +1,5 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
-import Hack.Contrib.Utils (dummy_middleware)
 import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
