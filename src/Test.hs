@@ -13,6 +13,9 @@ import Network.Loli.Utils
 
 main = run . loli $ do
 
+  middleware etag
+  middleware show_status
+
   -- simple
   get "/hello"    (text "hello world")
   
@@ -75,6 +78,3 @@ main = run . loli $ do
   -- treat .hs extension as text/plain
   mime "hs" "text/plain"
 
-
-  middleware etag
-  middleware show_status
