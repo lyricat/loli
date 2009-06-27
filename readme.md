@@ -119,6 +119,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
       <h1>using a layout</h1>
       $content
     </body>
+    </html>
 
 ### Global
 
