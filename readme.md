@@ -54,14 +54,14 @@ check: <http://localhost:3000>
     -- public serve, only allows /src
     public (Just ".") ["/src"]
 
-## Views
+## Views root
 
     -- in `./views`, can be changed by
     views "template"
 
-### Template
+## Template
 
-#### Text Template
+### Text Template
 
     import Network.Loli.Template.TextTemplate
     
@@ -76,28 +76,28 @@ check: <http://localhost:3000>
     </body>
     </html>
 
-#### Local binding
+### Local binding
 
     get "/local-binding" $ do
       bind "user" "alice" $ output (text_template "hello.html")
 
-#### Batched local bindings
+### Batched local bindings
 
     get "/batched-local-binding" $ do
       context [("user", "alice"), ("password", "foo")] $ 
         text . show =<< locals
 
-### Partials
+## Partials
 
 Partials are treated the same as user supplied bindings, i.e. the rendered text is available to the rest of templates, referenced by user supplied keywords.
 
-#### with single partial
+### with single partial
 
     get "/single-partial" $ do
       partial "user" (const_template "const-user") $ do
         text . show =<< template_locals
 
-#### with batched partials
+### with batched partials
 
     get "/group-partial" $ do
       partials 
@@ -105,7 +105,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
         , ("password", const_template "foo")
         ] $ output (text_template "hello.html")
 
-### Layout
+## Layout
 
 ### Local
 
