@@ -66,7 +66,7 @@ check: <http://localhost:3000>
     import Network.Loli.Template.TextTemplate
     
     -- template
-    get "/hi/:user" $ text_template "hello.html"
+    get "/hi/:user" $ output (text_template "hello.html")
     
     -- in hello.html
     <html>
@@ -79,7 +79,7 @@ check: <http://localhost:3000>
 #### Local binding
 
     get "/local-binding" $ do
-      bind "user" "alice" (text_template "hello.html")
+      bind "user" "alice" $ output (text_template "hello.html")
 
 #### Batched local bindings
 
