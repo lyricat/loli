@@ -1,6 +1,6 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
-import Hack.Contrib.Middleware.ETag
+import Hack.Contrib.Middleware.Lambda
 import Hack.Contrib.Middleware.ShowStatus
 import Hack.Handler.Happstack
 import Network.Loli
@@ -13,7 +13,7 @@ import Network.Loli.Utils
 
 main = run . loli $ do
 
-  middleware etag
+  middleware lambda
   middleware show_status
 
   -- simple
