@@ -14,7 +14,7 @@ type Assoc          = [(String, String)]
 type AppState       = Response
 type AppReader      = Env
 
-type AppUnitT a     = ReaderT AppReader (StateT AppState IO) a
+type AppUnitT       = ReaderT AppReader (StateT AppState IO)
 type AppUnit        = AppUnitT ()
 type Context        = Assoc
 
