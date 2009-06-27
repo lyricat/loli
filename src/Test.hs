@@ -1,5 +1,7 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
+import Hack.Contrib.Middleware.ETag
+import Hack.Contrib.Middleware.ShowStatus
 import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
@@ -65,7 +67,7 @@ main = run . loli $ do
       text "no-layout"
   
   -- default
-  get "/"         (text "at root")
+  -- get "/"         (text "at root")
 
   -- public serve, only allows /src
   public (Just ".") ["/src"]
@@ -73,3 +75,6 @@ main = run . loli $ do
   -- treat .hs extension as text/plain
   mime "hs" "text/plain"
 
+
+  middleware etag
+  middleware show_status

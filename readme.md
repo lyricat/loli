@@ -136,6 +136,22 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
     -- treat .hs extension as text/plain
     mime "hs" "text/plain"
 
+## Hack integration
+
+## use hack middlewares
+
+    import Hack.Contrib.Middleware.ETag
+    import Hack.Contrib.Middleware.ShowStatus
+    
+    middleware etag
+    middleware show_status
+
+## Convert itself into a hack application
+
+    -- in Network.Loli.Engine
+    
+    loli :: Unit -> Application
+
 ## Note
 
 If you see this, use the git version!
