@@ -11,6 +11,7 @@ import Network.Loli.DSL
 import Network.Loli.Template.TextTemplate
 import Network.Loli.Type
 import Network.Loli.Utils
+import Data.Maybe
 import Prelude hiding ((.), (>), (^), (/))
 import qualified Control.Monad.State as State
 
@@ -27,7 +28,6 @@ html x = do
   update $ set_body (x.fromString)
   render_layout
 
-
 -- template
 partial_locals ::  AppUnitT Context
 partial_locals = ask ^ namespace loli_partials
@@ -39,13 +39,13 @@ template_locals = do
   p <- partial_locals
   return (c ++ b ++ p)
 
-render :: (Template a) => AppUnitT a -> AppUnitT String
+render :: (Template a) => a -> AppUnitT String
 render x = do
-  template <- x
+  root <- ask ^ namespace loli_config ^ lookup loli_views ^ fromMaybe "."
   context' <- template_locals
-  interpolate template context' .io
+  interpolate x root context' .io
   
-output :: (Template a) => AppUnitT a -> AppUnit
+output :: (Template a) => a -> AppUnit
 output x = render x >>= fromString > set_body > update
 
 render_layout :: AppUnit
@@ -61,10 +61,10 @@ render_layout = do
 
 
 
-partial :: (Template a) => String -> AppUnitT a -> AppUnit -> AppUnit
+partial :: (Template a) => String -> a -> AppUnit -> AppUnit
 partial s x = partials [(s, x)]
 
-partials :: (Template a) => [(String, AppUnitT a)] -> AppUnit -> AppUnit
+partials :: (Template a) => [(String, a)] -> AppUnit -> AppUnit
 partials xs unit = do
    let ps = xs.only_snd
    rs <- ps.mapM render

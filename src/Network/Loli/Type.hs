@@ -34,4 +34,4 @@ type Unit    = UnitT ()
 
 class Template a where
   -- the only interface for template
-  interpolate :: a -> Context -> IO String
+  interpolate :: a -> String -> Context -> IO String
