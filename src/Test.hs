@@ -4,7 +4,6 @@ import Hack.Contrib.Utils (dummy_middleware)
 import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
-import Network.Loli.Template
 import Network.Loli.Template.ConstTemplate (const_template)
 import Network.Loli.Template.TextTemplate
 import Network.Loli.Utils
