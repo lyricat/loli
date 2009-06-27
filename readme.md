@@ -66,7 +66,7 @@ check: <http://localhost:3000>
     import Network.Loli.Template.TextTemplate
     
     -- template
-    get "/hi/:user" $ output (TextTemplate "hello.html")
+    get "/hi/:user" $ output (text_template "hello.html")
     
     -- in hello.html
     <html>
@@ -79,7 +79,7 @@ check: <http://localhost:3000>
 #### Local binding
 
     get "/local-binding" $ do
-      bind "user" "alice" $ output (TextTemplate "hello.html")
+      bind "user" "alice" $ output (text_template "hello.html")
 
 #### Batched local bindings
 
@@ -94,16 +94,16 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 #### with single partial
 
     get "/single-partial" $ do
-      partial "user" (ConstTemplate "const-user") $ do
+      partial "user" (const_template "const-user") $ do
         text . show =<< template_locals
 
 #### with batched partials
 
     get "/group-partial" $ do
       partials 
-        [ ("user", ConstTemplate "alex")
-        , ("password", ConstTemplate "foo")
-        ] $ output (TextTemplate "hello.html")
+        [ ("user", const_template "alex")
+        , ("password", const_template "foo")
+        ] $ output (text_template "hello.html")
 
 ### Layout
 
