@@ -2,34 +2,27 @@ module Network.Loli.DSL where
 
 import Control.Monad.Reader
 import Control.Monad.State
-import Data.ByteString.Lazy.UTF8 (fromString)
 import Hack
-import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.Static
-import Hack.Contrib.Response
 import MPS
 import Network.Loli.Config
 import Network.Loli.Engine
+import Network.Loli.Type
 import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^))
 import qualified Control.Monad.State as State
 
+
 app :: Application -> AppUnit
 app f = ask >>= (f > io) >>= State.put
 
-text :: String -> AppUnit
-text x = do
-  update $ set_content_type _TextPlain
-  update $ set_body (x.fromString)
 
-html :: String -> AppUnit
-html x = do
-  update $ set_content_type _TextHtml
-  update $ set_body (x.fromString)
+layout :: String -> Unit
+layout x = middleware $ config (set_namespace loli_config loli_layout x)
 
 views :: String -> Unit
-views x = middleware $ config (set_namespace loli_views [("root", x)])
+views x = middleware $ config (set_namespace loli_config loli_views x)
 
 get, put, delete, post :: String -> AppUnit -> Unit
 get    = route GET
@@ -50,7 +43,7 @@ io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
 context :: [(String, String)] -> AppUnit -> AppUnit
-context = set_namespace loli_bindings > local
+context = put_namespace loli_bindings > local
 
 bind :: String -> String -> AppUnit -> AppUnit
 bind k v = context [(k, v)]

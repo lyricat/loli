@@ -59,7 +59,9 @@ check: <http://localhost:3000>
     -- in `./views`, can be changed by
     views "template"
 
-### Text Template
+### Template
+
+#### Text Template
 
     import Network.Loli.Template.TextTemplate
     
@@ -74,16 +76,59 @@ check: <http://localhost:3000>
     </body>
     </html>
 
-### Local bindings
+#### Local bindings
 
     get "/local-binding" $ do
       bind "user" "alice" (text_template "hello.html")
 
-### Batched local bindings
+#### Batched local bindings
 
     get "/batched-local-binding" $ do
       context [("user", "alice"), ("password", "foo")] $ 
         text . show =<< bindings
+
+### Partials
+
+Partials are treated the same as local variable bindings, i.e. the rendered text is available to the rest of templates.
+
+#### with single partial
+
+    get "/single-partial" $ do
+      partial "user" (const_template "const-user") $ do
+        text . show =<< template_bindings
+
+#### with batched partials
+
+    get "/group-partial" $ do
+      partials 
+        [ ("user", const_template "alex")
+        , ("password", const_template "foo")
+        ] $ output (text_template "hello.html")
+
+### Layout
+
+### Local
+
+    get "/with-layout" $ do
+      with_layout "layout.html" $ do
+        text "layout?"
+    
+    -- in layout.html
+    <html>
+    <body>
+      <h1>using a layout</h1>
+      $content
+    </body>
+
+### Global
+
+    layout "layout.html"
+
+### Disabled
+
+    get "/no-layout" $ do
+      no_layout $ do
+        text "no-layout"
 
 
 ## Mime types

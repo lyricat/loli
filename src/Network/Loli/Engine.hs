@@ -13,20 +13,9 @@ import Hack.Contrib.Response
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
+import Network.Loli.Type
 import Network.Loli.Utils
 import Prelude hiding ((.), (/), (>), (^))
-
-
-type RoutePath      = (RequestMethod, String, AppUnit)
-type EnvFilter      = Env -> Env
-type ResponseFilter = Response -> Response
-type Param          = (String, String)
-type AppState       = Response
-type AppReader      = Env
-
-type AppUnitT a     = ReaderT AppReader (StateT AppState IO) a
-type AppUnit        = AppUnitT ()
-
 
 run_app :: AppUnit -> Application
 run_app unit = \env -> runReaderT unit env .flip execStateT def
@@ -50,9 +39,9 @@ router h app' = \env'' ->
       env'.request_method.is method 
         && env'.path_info.parse_params template .isJust
     merge_captured params env' = 
-      env'.set_namespace loli_captures params 
+      env'.put_namespace loli_captures params 
 
-parse_params :: String -> String -> Maybe (String, [(String, String)])
+parse_params :: String -> String -> Maybe (String, Assoc)
 parse_params "/" s = Just (s, [])
 parse_params t s =
   let template_tokens = t.split "/"
@@ -75,23 +64,6 @@ parse_params t s =
       | x.starts_with ":" = Just $ Just (x.tail, y)
       | x == y = Just Nothing
       | otherwise = Nothing
-    
-  
-
-data Loli = Loli
-  {
-    routes :: [RoutePath]
-  , middlewares :: [Middleware]
-  , mimes :: [(String, String)]
-  }
-
-instance Default Loli where
-  def = Loli def [dummy_middleware] def
-
-type UnitT a = State Loli a
-type Unit    = UnitT ()
-
-
 
 loli :: Unit -> Application
 loli unit = run unit (not_found empty_app)
@@ -122,10 +94,11 @@ add_mime :: String -> String -> Loli -> Loli
 add_mime k v s = let xs = s.mimes in s {mimes = xs.insert_last (k, v)}
 
 -- middleware
-lookup_mime :: [(String, String)] -> Middleware
+lookup_mime :: Assoc -> Middleware
 lookup_mime h app env = do
   r <- app env
   case h.only_fst.find mime >>= flip lookup h of
     Nothing -> return r
     Just v -> return $ r.set_content_type v
   where mime x = env.path_info.ends_with ('.' : x)
+

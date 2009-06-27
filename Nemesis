@@ -6,6 +6,7 @@ nemesis = do
     , "manifest"
     , "Test"
     , "myloli"
+    , "pure_hack"
     ]
     
   desc "prepare cabal dist"
@@ -38,3 +39,7 @@ nemesis = do
     sh "echo done.."
     sh "./myloli"
   
+  task "pure-hack" $ do
+    sh "ghc --make -isrc src/Test/pure_hack.hs -o pure_hack"
+    sh "echo done.."
+    sh "./pure_hack" 
