@@ -43,11 +43,11 @@ io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
 context :: [(String, String)] -> AppUnit -> AppUnit
-context = put_namespace loli_bindings > local
+context = put_namespace loli_locals > local
 
 bind :: String -> String -> AppUnit -> AppUnit
 bind k v = context [(k, v)]
 
-captures, bindings :: AppUnitT [(String, String)]
+captures, locals :: AppUnitT [(String, String)]
 captures = ask ^ namespace loli_captures
-bindings = ask ^ namespace loli_bindings
+locals = ask ^ namespace loli_locals

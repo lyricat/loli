@@ -27,8 +27,8 @@ pre_installed_middlewares =
 loli_captures :: String
 loli_captures = "loli-captures-"
 
-loli_bindings :: String
-loli_bindings = "loli-bindings-"
+loli_locals :: String
+loli_locals = "loli-locals-"
 
 loli_partials :: String
 loli_partials = "loli-partials-"

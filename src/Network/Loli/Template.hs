@@ -29,20 +29,20 @@ html x = do
 
 
 -- template
-partial_bindings ::  AppUnitT Context
-partial_bindings = ask ^ namespace loli_partials
+partial_locals ::  AppUnitT Context
+partial_locals = ask ^ namespace loli_partials
 
-template_bindings :: AppUnitT Context
-template_bindings = do
+template_locals :: AppUnitT Context
+template_locals = do
   c <- captures
-  b <- bindings
-  p <- partial_bindings
+  b <- locals
+  p <- partial_locals
   return (c ++ b ++ p)
 
 render :: (Template a) => AppUnitT a -> AppUnitT String
 render x = do
   template <- x
-  context' <- template_bindings
+  context' <- template_locals
   interpolate template context' .io
   
 output :: (Template a) => AppUnitT a -> AppUnit

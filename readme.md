@@ -76,26 +76,26 @@ check: <http://localhost:3000>
     </body>
     </html>
 
-#### Local bindings
+#### Local locals
 
     get "/local-binding" $ do
       bind "user" "alice" (text_template "hello.html")
 
-#### Batched local bindings
+#### Batched local locals
 
     get "/batched-local-binding" $ do
       context [("user", "alice"), ("password", "foo")] $ 
-        text . show =<< bindings
+        text . show =<< locals
 
 ### Partials
 
-Partials are treated the same as local variable bindings, i.e. the rendered text is available to the rest of templates.
+Partials are treated the same as local variable locals, i.e. the rendered text is available to the rest of templates.
 
 #### with single partial
 
     get "/single-partial" $ do
       partial "user" (const_template "const-user") $ do
-        text . show =<< template_bindings
+        text . show =<< template_locals
 
 #### with batched partials
 

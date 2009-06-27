@@ -39,17 +39,17 @@ main = run . loli $ do
     bind "user" "alice" $ output (text_template "hello.html")
     
   
-  -- batched local bindings
+  -- batched local locals
   get "/batched-local-binding" $ do
     context [("user", "alice"), ("password", "foo")] $ 
-      text .show =<< bindings
+      text .show =<< locals
   
   get "/const-template" $ do
     output (const_template "const-string")
   
   get "/partial-template" $ do
     partial "user" (const_template "const-user") $ do
-      text . show =<< template_bindings
+      text . show =<< template_locals
   
   get "/partial-context" $ do
     partials 
