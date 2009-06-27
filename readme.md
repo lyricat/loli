@@ -138,7 +138,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ## Hack integration
 
-## use hack middlewares
+## use hack middleware
 
     import Hack.Contrib.Middleware.ETag
     import Hack.Contrib.Middleware.ShowStatus
