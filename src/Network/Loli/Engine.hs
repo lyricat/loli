@@ -24,12 +24,12 @@ loli unit = run unit (not_found empty_app)
   where
     run :: Unit -> Middleware
     run unit' = 
-      let s           = execState unit' def
-          paths       = s.routes
+      let loli_state  = execState unit' def
+          paths       = loli_state.routes
           
           loli_app    = loli_router loli_captures run_app paths 
-          mime_filter = user_mime (s.mimes)
-          stack       = s.middlewares.use
+          mime_filter = user_mime (loli_state.mimes)
+          stack       = loli_state.middlewares.use
           pre         = pre_installed_middlewares.use
       in
       use [pre, mime_filter, stack, loli_app]
