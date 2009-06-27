@@ -138,7 +138,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ## Hack integration
 
-## Use hack middleware
+### Use hack middleware
 
     import Hack.Contrib.Middleware.ETag
     import Hack.Contrib.Middleware.ShowStatus
@@ -146,7 +146,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
     middleware etag
     middleware show_status
 
-## Convert itself into a hack application
+### Convert itself into a hack application
 
     -- in Network.Loli.Engine
     
