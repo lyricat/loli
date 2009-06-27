@@ -89,7 +89,7 @@ check: <http://localhost:3000>
 
 ### Partials
 
-Partials are treated the same as local variable locals, i.e. the rendered text is available to the rest of templates.
+Partials are treated the same as user supplied bindings, i.e. the rendered text is available to the rest of templates.
 
 #### with single partial
 
