@@ -76,12 +76,12 @@ check: <http://localhost:3000>
     </body>
     </html>
 
-#### Local locals
+#### Local binding
 
     get "/local-binding" $ do
       bind "user" "alice" (text_template "hello.html")
 
-#### Batched local locals
+#### Batched local bindings
 
     get "/batched-local-binding" $ do
       context [("user", "alice"), ("password", "foo")] $ 
@@ -89,7 +89,7 @@ check: <http://localhost:3000>
 
 ### Partials
 
-Partials are treated the same as user supplied bindings, i.e. the rendered text is available to the rest of templates.
+Partials are treated the same as user supplied bindings, i.e. the rendered text is available to the rest of templates, referenced by user supplied keywords.
 
 #### with single partial
 
@@ -124,7 +124,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
     layout "layout.html"
 
-### Disabled
+### By passed
 
     get "/no-layout" $ do
       no_layout $ do
