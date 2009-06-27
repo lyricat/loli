@@ -59,7 +59,7 @@ parse_params t s =
       | otherwise = Nothing
       
 -- copy from loli utils
-put_namespace :: String -> [(String, String)] -> Env -> Env
+put_namespace :: String -> Assoc -> Env -> Env
 put_namespace x xs env = 
   let adds = xs.map_fst (x ++)
       new_headers = adds.map fst

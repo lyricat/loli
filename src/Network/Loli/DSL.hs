@@ -42,12 +42,13 @@ public r xs = middleware $ static r xs
 io :: (MonadIO m) => IO a -> m a
 io = liftIO
 
-context :: [(String, String)] -> AppUnit -> AppUnit
+context :: Assoc -> AppUnit -> AppUnit
 context = put_namespace loli_locals > local
 
 bind :: String -> String -> AppUnit -> AppUnit
 bind k v = context [(k, v)]
 
-captures, locals :: AppUnitT [(String, String)]
+captures, locals :: AppUnitT Assoc
 captures = ask ^ namespace loli_captures
-locals = ask ^ namespace loli_locals
+locals   = ask ^ namespace loli_locals
+
