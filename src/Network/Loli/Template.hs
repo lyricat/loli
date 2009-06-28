@@ -46,7 +46,7 @@ render x = do
   interpolate x root context' .io
   
 output :: (Template a) => a -> AppUnit
-output x = render x >>= fromString > set_body > update
+output x = render x >>= fromString > set_body > update >> render_layout
 
 render_layout :: AppUnit
 render_layout = do
