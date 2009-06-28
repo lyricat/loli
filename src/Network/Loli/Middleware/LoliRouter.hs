@@ -18,7 +18,7 @@ loli_router prefix runner h app' = \env'' ->
       script           = env''.script_name
       mod_env location = env'' 
         { scriptName  = script ++ location
-        , pathInfo    = "/" / path.drop (location.length)
+        , pathInfo    = path.drop (location.length)
         }
   in
   case h.find (match_route env'') of
@@ -35,7 +35,10 @@ loli_router prefix runner h app' = \env'' ->
 
 
 parse_params :: String -> String -> Maybe (String, Assoc)
-parse_params "/" s = Just (s, [])
+parse_params "" ""   = Just ("", [])
+parse_params "" _    = Nothing
+parse_params "/" "" = Nothing
+parse_params "/" _ = Just ("/", [])
 parse_params t s =
   let template_tokens = t.split "/"
       url_tokens = s.split "/"
