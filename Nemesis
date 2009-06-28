@@ -22,24 +22,29 @@ nemesis = do
   task "manifest" $ do
     sh "find . | grep 'hs$' > manifest"
 
-  task "test" $ do
-    sh "ghc --make -isrc src/Test.hs -o Test"
-    sh "echo done.."
-    sh "./Test"
-    
+
+
   desc "show sloc"
   task "stat" $ do
     sh "cloc -match-f=hs$ --quiet src --no3"
     
 
-  task "template" $ sh "ghci -isrc src/Network/Loli/Template.hs"
+  ghci "template" "Network/Loli/Template"
+  ghci "ipaste" "Test/LoliPaste"
   
-  task "loli" $ do
-    sh "ghc --make -isrc src/Test/myloli.hs -o myloli"
-    sh "echo done.."
-    sh "./myloli"
+  bin "test" "Test/Test"
+  bin "paste" "Test/LoliPaste"
+  bin "myloli" "Test/myloli"
   
-  task "pure-hack" $ do
-    sh "ghc --make -isrc src/Test/pure_hack.hs -o pure_hack"
-    sh "echo done.."
-    sh "./pure_hack" 
+  
+  -- test
+  
+  task "tl" $ sh "curl j:3000"
+  task "tp" $ sh "curl -d 'src=print' j:3000"
+  
+  where
+    ghci n x = task n $ sh $ "ghci -isrc src/" ++ x ++ ".hs"
+    bin n x = task n $ do
+      sh $ "ghc --make -isrc src/" ++ x ++ ".hs -o .bin/" ++ n
+      sh $ "echo done.."
+      sh $ ".bin/" ++ n

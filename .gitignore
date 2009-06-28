@@ -21,5 +21,7 @@ hello
 Main
 
 .nemesis
-Test
-myloli
+
+.bin
+src/Test
+db
