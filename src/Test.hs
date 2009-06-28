@@ -19,6 +19,8 @@ main = run . loli $ do
   -- simple
   get "/hello"    (text "hello world")
   
+  get "/debug"    (text . show =<< ask)
+  
   -- io
   get "/cabal"    $ text =<< io (readFile "loli.cabal")
 

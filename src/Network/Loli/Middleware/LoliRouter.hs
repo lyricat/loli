@@ -6,7 +6,7 @@ import Hack
 import Hack.Contrib.Utils
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
-import Prelude hiding ((.), (>))
+import Prelude hiding ((.), (>), (/))
 
 
 type RoutePathT a   = (RequestMethod, String, a)
@@ -18,7 +18,7 @@ loli_router prefix runner h app' = \env'' ->
       script           = env''.script_name
       mod_env location = env'' 
         { scriptName  = script ++ location
-        , pathInfo    = path.drop (location.length)
+        , pathInfo    = "/" / path.drop (location.length)
         }
   in
   case h.find (match_route env'') of
@@ -47,7 +47,7 @@ parse_params t s =
       in
       if rs.all isJust
         then 
-          let location = url_tokens.take (template_tokens.length).join "/"
+          let location = "/" / url_tokens.take (template_tokens.length).join "/"
           in
           Just $ (location, rs.map fromJust.filter isJust.map fromJust)
         else Nothing
