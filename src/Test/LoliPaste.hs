@@ -14,29 +14,29 @@
 
 import Control.Monad.Reader hiding (join)
 import Data.Default
+import Data.List
 import Data.Maybe
 import Hack.Contrib.Constants
+import Hack.Contrib.Middleware.ContentType
 import Hack.Contrib.Middleware.Lambda
 import Hack.Contrib.Middleware.ShowStatus
-import Hack.Contrib.Middleware.ContentType
 import Hack.Contrib.Request hiding (content_type, port)
 import Hack.Contrib.Response
 import Hack.Contrib.Utils (unescape_uri, escape_html)
 import Hack.Handler.Happstack
-import MPSUTF8
-import MPS.TH
 import MPS.Heavy
+import MPS.TH
+import MPSUTF8
 import Network.Loli
 import Network.Loli.Engine
 import Network.Loli.Template.TextTemplate
 import Network.Loli.Utils
-import UTF8Prelude hiding ((^), (.), (>), (/), read)
 import System.Directory
 import Text.Highlighting.Kate (highlightAs, formatAsXHtml)
 import Text.XHtml.Strict (renderHtmlFragment)
+import UTF8Prelude hiding ((^), (.), (>), (/), read)
 import qualified Prelude as P
-import Data.List
-
+import qualified Text.Highlighting.Kate as Kate (languages)
 
 -- Config
 db, sep :: String
@@ -73,7 +73,7 @@ create x = x.src.writeFile (db / name)
 
 
 list :: IO [Paste]
-list = ls db ^ rsort >>= mapM read
+list = ls db ^ reject (starts_with ".") ^ rsort >>= mapM read
 
 read :: String -> IO Paste
 read x =  do
@@ -193,63 +193,7 @@ guess_lang :: String -> String
 guess_lang s = languages.find (is s).fromMaybe "txt"
 
 languages :: [String]
-languages = 
-  [ "haskell"
-  , "ada"
-  , "alert"
-  , "asp"
-  , "awk"
-  , "bash"
-  , "bibtex"
-  , "c"
-  , "cmake"
-  , "coldfusion"
-  , "commonlisp"
-  , "cpp"
-  , "css"
-  , "d"
-  , "djangotemplate"
-  , "doxygen"
-  , "dtd"
-  , "eiffel"
-  , "erlang"
-  , "fortran"
-  , "html"
-  , "java"
-  , "javadoc"
-  , "javascript"
-  , "json"
-  , "latex"
-  , "lex"
-  , "literatehaskell"
-  , "lua"
-  , "makefile"
-  , "matlab"
-  , "mediawiki"
-  , "modula3"
-  , "nasm"
-  , "objectivec"
-  , "ocaml"
-  , "pascal"
-  , "perl"
-  , "php"
-  , "postscript"
-  , "prolog"
-  , "python"
-  , "rhtml"
-  , "ruby"
-  , "scala"
-  , "scheme"
-  , "sgml"
-  , "sql"
-  , "sqlmysql"
-  , "sqlpostgresql"
-  , "tcl"
-  , "texinfo"
-  , "xml"
-  , "xslt"
-  , "yacc"
-  ]
+languages = Kate.languages.map lower
 
 options :: String
 options = languages.map make_option .join "\n"
