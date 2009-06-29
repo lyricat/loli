@@ -27,7 +27,7 @@ check: <http://localhost:3000>
 
 ## Routes
 
-### Verb
+### Verbs
 
     get "/" $ do
       -- something for a get request
