@@ -13,7 +13,7 @@ import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.Lambda
 import Hack.Contrib.Middleware.ShowStatus
 import Hack.Contrib.Middleware.ContentType
-import Hack.Contrib.Request hiding (content_type)
+import Hack.Contrib.Request hiding (content_type, port)
 import Hack.Contrib.Response
 import Hack.Contrib.Utils (unescape_uri, escape_html)
 import Hack.Handler.Happstack
@@ -100,7 +100,8 @@ link x = "/" ++ x.paste_id
 
 
 -- Controller
-main = run $ loli $ do
+main :: IO ()
+main = runWithConfig def {port = 5000}  $ loli $ do
 
   public (Just "public") ["/css", "/js"]
   

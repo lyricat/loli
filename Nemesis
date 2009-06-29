@@ -41,6 +41,13 @@ nemesis = do
   
   task "tl" $ sh "curl j:3000"
   task "tp" $ sh "curl -d 'src=print' j:3000"
+
+  -- deploy
+  task "deploy" $ sh "scp -C .bin/paste easymic.com:~/link/loli/.bin"
+
+  task "start" $ do
+    sh "echo starting.."
+    sh ".bin/paste"
   
   where
     ghci n x = task n $ sh $ "ghci -isrc src/" ++ x ++ ".hs"
