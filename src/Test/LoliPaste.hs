@@ -112,7 +112,6 @@ main = runWithConfig def {port = 5000}  $ loli $ do
   views "views/loli_paste"
   layout "layout.html"
   
-
   
   get "/create" $ do
     bind "options" options $ do
