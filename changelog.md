@@ -1,3 +1,10 @@
+2009.6.29
+---------
+
+### Feature
+
+* Initial hackage release
+
 2009.6.27
 ---------
 
