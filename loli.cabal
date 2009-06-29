@@ -25,8 +25,8 @@ library
                       Network.Loli.Config
                       Network.Loli.DSL
                       Network.Loli.Engine
-                      Network.Loli.LoliRouter
-                      Network.Loli.UserMine
+                      Network.Loli.Middleware.LoliRouter
+                      Network.Loli.Middleware.UserMime
                       Network.Loli.Template
                       Network.Loli.Template.ConstTemplate
                       Network.Loli.Template.TextTemplate
