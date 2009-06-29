@@ -26,7 +26,7 @@ import Hack.Contrib.Utils (unescape_uri, escape_html)
 import Hack.Handler.Happstack
 import MPS.Heavy
 import MPS.TH
-import MPSUTF8
+import MPSUTF8 hiding (ls)
 import Network.Loli
 import Network.Loli.Engine
 import Network.Loli.Template.TextTemplate
@@ -35,6 +35,7 @@ import System.Directory
 import Text.Highlighting.Kate (highlightAs, formatAsXHtml)
 import Text.XHtml.Strict (renderHtmlFragment)
 import UTF8Prelude hiding ((^), (.), (>), (/), read)
+import qualified MPSUTF8 as MPS
 import qualified Prelude as P
 import qualified Text.Highlighting.Kate as Kate (languages)
 
@@ -71,9 +72,11 @@ create x = x.src.writeFile (db / name)
       , x.lang
       ] .concat
 
+ls :: String -> IO [String]
+ls x = MPS.ls x ^ reject (starts_with ".")
 
 list :: IO [Paste]
-list = ls db ^ reject (starts_with ".") ^ rsort >>= mapM read
+list = ls db ^ rsort >>= mapM read
 
 read :: String -> IO Paste
 read x =  do
