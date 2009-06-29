@@ -186,7 +186,7 @@ kate language code =
   case highlightAs language code of
     Right result -> renderHtmlFragment $ 
         formatAsXHtml [] language result
-    Left  _    -> "<pre><code>" ++ code ++ "</pre></code>"
+    Left  _    -> "<pre><code>" ++ code ++ "</code></pre>"
 
 
 guess_lang :: String -> String
