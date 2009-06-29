@@ -1,6 +1,10 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE QuasiQuotes #-}
 
+{- cabal install highlighting-kate
+ - cabal install utf8-prelude
+ - cabal install hack-handler-happstack
+ -}
 
 import Control.Monad.Reader hiding (join)
 import Data.Default
