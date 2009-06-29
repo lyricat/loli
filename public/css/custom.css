@@ -1,0 +1,33 @@
+h1 a, h2 a{
+  text-decoration: none;
+}
+
+textarea {
+  width: 100%;
+}
+
+/* highlight */
+
+/*
+table.sourceCode {
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom:  1px solid #eee;
+  border-left: 5px solid #eee;
+  border-right: 0;
+  width: 530px;
+}
+
+
+td.lineNumbers { 
+  display: none;
+}
+*/
+
+
+pre code {
+  line-height: 9px;
+}
+

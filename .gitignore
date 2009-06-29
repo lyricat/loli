@@ -10,7 +10,6 @@
 
 *.log
 
-/public
 /db
 
 /_darcs
