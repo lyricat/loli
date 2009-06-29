@@ -4,7 +4,7 @@ Build-type:           Simple
 Synopsis:             A minimum web dev DSL in Haskell
 Description:
     
-    A simple and easy to use library for fast web prototyping in Haskell.
+    A simple library for fast web prototyping in Haskell.
 
 License:              BSD3
 License-file:         LICENSE
