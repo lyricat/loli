@@ -8,8 +8,8 @@ import Prelude hiding ((.), (>), (^), (/))
 import Text.Template hiding (Context, Template, template)
 import qualified Text.Template as T
 
-render_TextTemplate :: String -> Context -> IO String
-render_TextTemplate x c = 
+render_text_template :: String -> Context -> IO String
+render_text_template x c = 
   readTemplate (x.u2b) ^ flip T.render (create_context c) ^ toString
   where
     create_context = map (fromString *** fromString) > to_h
@@ -17,7 +17,7 @@ render_TextTemplate x c =
 data TextTemplate = TextTemplate String
 
 instance Template TextTemplate where
-  interpolate (TextTemplate x) r = render_TextTemplate (r / x)
+  interpolate (TextTemplate x) r = render_text_template (r / x)
 
 text_template :: String -> TextTemplate
 text_template = TextTemplate
