@@ -1,3 +1,9 @@
+{-
+  This Demo file is licenced under GPL !
+  
+  - Jinjing Wang
+-}
+
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE QuasiQuotes #-}
 
