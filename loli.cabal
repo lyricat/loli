@@ -14,7 +14,7 @@ Build-Depends:        base
 Cabal-version:        >= 1.2
 category:             Web
 homepage:             http://github.com/nfjinjing/loli
-data-files:           readme.md, changelog.md, Nemesis, known-issues.md, src/Test/Test.hs, src/Test/LoliPaste.hs, views/*.html, views/loli_paste/*.html
+data-files:           readme.md, changelog.md, Nemesis, known-issues.md, src/Test/Test.hs, views/layout.html
 
 library
   ghc-options: -Wall
@@ -25,6 +25,8 @@ library
                       Network.Loli.Config
                       Network.Loli.DSL
                       Network.Loli.Engine
+                      Network.Loli.LoliRouter
+                      Network.Loli.UserMine
                       Network.Loli.Template
                       Network.Loli.Template.ConstTemplate
                       Network.Loli.Template.TextTemplate
