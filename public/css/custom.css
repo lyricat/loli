@@ -27,7 +27,12 @@ td.lineNumbers {
 */
 
 
+/*
 pre code {
-  line-height: 9px;
+  line-height: 7px;
 }
+*/
 
+pre code br {
+  display: none;
+}
