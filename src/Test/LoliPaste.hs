@@ -1,29 +1,35 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE QuasiQuotes #-}
 
+
 import Control.Monad.Reader hiding (join)
+import Data.Default
+import Data.Maybe
 import Hack.Contrib.Constants
-import Hack.Contrib.Response
 import Hack.Contrib.Middleware.Lambda
 import Hack.Contrib.Middleware.ShowStatus
 import Hack.Contrib.Middleware.ContentType
+import Hack.Contrib.Request hiding (content_type)
+import Hack.Contrib.Response
+import Hack.Contrib.Utils (unescape_uri, escape_html)
 import Hack.Handler.Happstack
+import MPSUTF8
+import MPS.TH
+import MPS.Heavy
 import Network.Loli
 import Network.Loli.Engine
-import Network.Loli.Template.ConstTemplate (const_template)
 import Network.Loli.Template.TextTemplate
 import Network.Loli.Utils
-import Data.Maybe
-import MPS
-import MPS.TH
-import Prelude hiding ((^), (.), (>), (/), read)
-import qualified Prelude as P
-import Hack.Contrib.Request hiding (content_type)
-import Hack.Contrib.Utils hiding (get, now)
-import Data.Default
+import UTF8Prelude hiding ((^), (.), (>), (/), read)
 import System.Directory
+import Text.Highlighting.Kate (highlightAs, formatAsXHtml)
+import Text.XHtml.Strict (renderHtmlFragment)
+import qualified Prelude as P
+import Data.List
+
 
 -- Config
+db, sep :: String
 db = "db"
 sep = "-"
 
@@ -79,16 +85,22 @@ format_no :: Int -> String
 format_no x = x.show.ljust 5 '0'
 
 exist :: String -> IO Bool
-exist x = doesFileExist (db / x)
+exist x = doesFileExist (db / (x.u2b))
    
-name x = x.no.format_no ++ sep ++ x.user ++ "." ++ x.lang
-link x = "/" ++ x.name
+paste_id :: Paste -> String
+paste_id x = x.no.format_no ++ sep ++ x.user ++ "." ++ x.lang
+
+link :: Paste -> String
+link x = "/" ++ x.paste_id
 
 
 
 -- Controller
+main :: IO ()
 main = run $ loli $ do
 
+  public (Just "public") ["/css", "/js"]
+  
   middleware lambda
   middleware show_status
   middleware $ content_type _TextHtml
@@ -96,26 +108,38 @@ main = run $ loli $ do
   views "views/loli_paste"
   layout "layout.html"
   
-  public (Just "public") ["/css", "/js"]
+
   
   get "/create" $ do
-    output $ text_template "create.html"
+    bind "options" options $ do
+      output $ text_template "create.html"
   
   get "/:paste" $ do
-    name <- captures ^ lookup "paste" ^ fromJust
+    name <- captures ^ lookup "paste" ^ fromJust ^ unescape_uri ^ b2u
     paste_exists <- exist name .io
     if paste_exists
-      then read name .io >>=  display > html
+      then do
+        paste <- read name .io
+        raw <- ask ^ params ^ lookup "raw"
+        case raw of
+          Just "true" -> no_layout $ text (paste.src)
+          _ -> do
+            context 
+              [ ("paste_id", paste.paste_id)
+              , ("src", paste.src.kate (paste.lang.guess_lang))
+              ] $ output $ text_template "view.html"
+        
       else html "paste missing"
 
   post "/" $ do
-    form <- ask ^ inputs
+    form <- ask ^ inputs ^ map_snd unescape_unicode_xml
     let src'  = form.lookup "src"
         user' = form.lookup "user"
         lang' = form.lookup "lang"
     
     if [src', user', lang'] .any isNothing 
       || (lang'.isJust && lang'.fromJust.null)
+      || (src'.isJust && src'.fromJust.null)
       then do
         print "form failed" .io
         html "post param missing"
@@ -138,34 +162,91 @@ main = run $ loli $ do
               
   -- default
   get "/" $ do
-    pastes <- list .io
+    pastes <- list .io ^ take 50
     let rows = pastes.map row .concat
     bind "rows" rows $ do
       output $ text_template "list.html"
 
+-- View helper
+
+kate :: String -> String -> String
+kate language code = 
+  case highlightAs language code of
+    Right result -> renderHtmlFragment $ 
+        formatAsXHtml [] language result
+    Left  _    -> "<pre><code>" ++ code ++ "</pre></code>"
 
 
+guess_lang :: String -> String
+guess_lang s = languages.find (is s).fromMaybe "txt"
 
+languages :: [String]
+languages = 
+  [ "haskell"
+  , "ada"
+  , "alert"
+  , "asp"
+  , "awk"
+  , "bash"
+  , "bibtex"
+  , "c"
+  , "cmake"
+  , "coldfusion"
+  , "commonlisp"
+  , "cpp"
+  , "css"
+  , "d"
+  , "djangotemplate"
+  , "doxygen"
+  , "dtd"
+  , "eiffel"
+  , "erlang"
+  , "fortran"
+  , "html"
+  , "java"
+  , "javadoc"
+  , "javascript"
+  , "json"
+  , "latex"
+  , "lex"
+  , "literatehaskell"
+  , "lua"
+  , "makefile"
+  , "matlab"
+  , "mediawiki"
+  , "modula3"
+  , "nasm"
+  , "objectivec"
+  , "ocaml"
+  , "pascal"
+  , "perl"
+  , "php"
+  , "postscript"
+  , "prolog"
+  , "python"
+  , "rhtml"
+  , "ruby"
+  , "scala"
+  , "scheme"
+  , "sgml"
+  , "sql"
+  , "sqlmysql"
+  , "sqlpostgresql"
+  , "tcl"
+  , "texinfo"
+  , "xml"
+  , "xslt"
+  , "yacc"
+  ]
 
--- View snippets
+options :: String
+options = languages.map make_option .join "\n"
+  where
+    make_option x = [$here|<option value="#{x}">#{x}</option>|]
 
-row x = [$here|
-<div class="row">
-  <h3>
-  <a href="#{x.link}">
-    #{x.name}
-  </a>
-  </h3>
-</div>
-|]
+h = escape_html
 
-display x = [$here|
-<div class="paste">
-  <h3>
-    #{x.name}
-  </h3>
-  <pre><code>
-  #{x.src}
-  </code></pre>
-</div>
-|]
+row :: Paste -> String      
+row x = "<div class=\"row\"><h3><a href=\"" ++ x.link.h ++ "\">"
+  ++ x.paste_id.h ++ "</a></h3></div>"
+

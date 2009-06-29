@@ -45,6 +45,6 @@ nemesis = do
   where
     ghci n x = task n $ sh $ "ghci -isrc src/" ++ x ++ ".hs"
     bin n x = task n $ do
-      sh $ "ghc --make -isrc src/" ++ x ++ ".hs -o .bin/" ++ n
+      sh $ "ghc --make -Wall -isrc src/" ++ x ++ ".hs -o .bin/" ++ n
       sh $ "echo done.."
       sh $ ".bin/" ++ n
