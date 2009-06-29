@@ -96,7 +96,6 @@ link x = "/" ++ x.paste_id
 
 
 -- Controller
-main :: IO ()
 main = run $ loli $ do
 
   public (Just "public") ["/css", "/js"]
@@ -116,20 +115,23 @@ main = run $ loli $ do
   
   get "/:paste" $ do
     name <- captures ^ lookup "paste" ^ fromJust ^ unescape_uri ^ b2u
-    paste_exists <- exist name .io
-    if paste_exists
-      then do
-        paste <- read name .io
-        raw <- ask ^ params ^ lookup "raw"
-        case raw of
-          Just "true" -> no_layout $ text (paste.src)
-          _ -> do
-            context 
-              [ ("paste_id", paste.paste_id)
-              , ("src", paste.src.kate (paste.lang.guess_lang))
-              ] $ output $ text_template "view.html"
+    if ".." `isInfixOf` name
+      then html "no permission"
+      else do
+        paste_exists <- exist name .io
+        if paste_exists
+          then do
+            paste <- read name .io
+            raw <- ask ^ params ^ lookup "raw"
+            case raw of
+              Just "true" -> no_layout $ text (paste.src)
+              _ -> do
+                context 
+                  [ ("paste_id", paste.paste_id)
+                  , ("src", paste.src.kate (paste.lang.guess_lang))
+                  ] $ output $ text_template "view.html"
         
-      else html "paste missing"
+          else html "paste missing"
 
   post "/" $ do
     form <- ask ^ inputs ^ map_snd unescape_unicode_xml
@@ -146,7 +148,7 @@ main = run $ loli $ do
       else do
         let src   = src'.fromJust.take 8096
             user  = user'.fromJust.take 30
-            lang  = lang'.fromJust
+            lang  = lang'.fromJust.take 20
             paste = def { src, user, lang }
         
         pastes <- ls db .io
@@ -244,6 +246,7 @@ options = languages.map make_option .join "\n"
   where
     make_option x = [$here|<option value="#{x}">#{x}</option>|]
 
+h :: String -> String
 h = escape_html
 
 row :: Paste -> String      
