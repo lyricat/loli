@@ -147,6 +147,9 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
     -- after takes that of type (Response -> IO Response)
     after return
 
+## On the fly router switcher
+
+    router loli_router
 
 ## Hack integration
 

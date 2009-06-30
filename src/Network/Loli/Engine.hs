@@ -22,23 +22,29 @@ run_app unit = \env -> runReaderT unit env .flip execStateT def
 loli :: Unit -> Application
 loli unit = run unit (not_found empty_app)
   where
+    run_route x = (x.router) loli_captures run_app (x.route_path)
+    
     run :: Unit -> Middleware
     run unit' = 
-      let loli_state  = execState unit' def
-          paths       = loli_state.routes
-          
-          loli_app    = loli_router loli_captures run_app paths 
-          mime_filter = user_mime (loli_state.mimes)
-          stack       = loli_state.middlewares.use
-          pre         = pre_installed_middlewares.use
+      let loli_state    = execState unit' def
+          route_configs = loli_state.routes
+          route         = route_configs.map run_route .use
+          mime_filter   = user_mime (loli_state.mimes)
+          stack         = loli_state.middlewares.use
+          pre           = pre_installed_middlewares.use
       in
-      use [pre, mime_filter, stack, loli_app]
+      use [pre, mime_filter, stack, route]
 
-add_route :: RoutePath -> Loli -> Loli
+add_route :: RouteConfig -> Loli -> Loli
 add_route r s = let xs = s.routes in s {routes = xs.insert_last r}
 
-route :: RequestMethod -> String -> AppUnit -> Unit
-route r s u = update $ add_route (r, s, u)
+add_current_route :: RequestMethod -> String -> AppUnit -> Unit
+add_current_route r s u = do
+  c <- get ^ current_router
+  update $ add_route RouteConfig { route_path = (r, s, u), router = c }
+
+set_router :: Router -> Loli -> Loli
+set_router r x = x { current_router = r }
 
 add_middleware :: Middleware -> Loli -> Loli
 add_middleware x s = 

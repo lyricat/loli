@@ -8,6 +8,7 @@ import Network.Loli.Engine
 import Network.Loli.Template.ConstTemplate (const_template)
 import Network.Loli.Template.TextTemplate
 import Network.Loli.Utils
+import Network.Loli.Middleware.LoliRouter
 import Data.Maybe
 import MPS ((^))
 import Prelude hiding ((^))
@@ -15,6 +16,7 @@ import Hack.Contrib.Request
 
 -- default on port 3000
 
+main :: IO ()
 main = run . loli $ do
   
     middleware lambda
@@ -26,6 +28,8 @@ main = run . loli $ do
     get "/bench"     $ do
       name <- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
       html ("<h1>" ++ name ++ "</h1>")
+
+    router loli_router
 
     -- simple
     get "/hello"    (text "hello world")
