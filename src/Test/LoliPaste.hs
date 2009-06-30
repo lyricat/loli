@@ -196,12 +196,14 @@ guess_lang :: String -> String
 guess_lang s = languages.find (is s).fromMaybe "txt"
 
 languages :: [String]
-languages = "haskell" : Kate.languages.map lower .reject (is "haskell")
+languages = Kate.languages.map lower
 
 options :: String
 options = languages.map make_option .join "\n"
   where
-    make_option x = [$here|<option value="#{x}">#{x}</option>|]
+    make_option x
+      | x.is "haskell" = [$here|<option value="#{x}" selected >#{x}</option>|]
+      | otherwise      = [$here|<option value="#{x}">#{x}</option>|]
 
 h :: String -> String
 h = escape_html
