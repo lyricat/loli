@@ -33,13 +33,13 @@ delete = route DELETE
 post   = route POST
 
 middleware :: Middleware -> Unit
-middleware x = add_middleware x .update
+middleware = add_middleware > update
 
 before :: (Env -> IO Env) -> Unit
-before f = middleware $ ioconfig f
+before = ioconfig > middleware
 
 after :: (Response -> IO Response) -> Unit
-after f = middleware $ censor f
+after = censor > middleware
 
 mime :: String -> String -> Unit
 mime k v = add_mime k v .update
