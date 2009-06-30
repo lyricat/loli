@@ -35,13 +35,13 @@ loli unit = run unit (not_found empty_app)
       in
       use [pre, mime_filter, stack, route]
 
-add_route :: RouteConfig -> Loli -> Loli
-add_route r s = let xs = s.routes in s {routes = xs.insert_last r}
+add_route_config :: RouteConfig -> Loli -> Loli
+add_route_config r s = let xs = s.routes in s {routes = xs.insert_last r}
 
-add_current_route :: RequestMethod -> String -> AppUnit -> Unit
-add_current_route r s u = do
+add_route :: RequestMethod -> String -> AppUnit -> Unit
+add_route r s u = do
   c <- get ^ current_router
-  update $ add_route RouteConfig { route_path = (r, s, u), router = c }
+  update $ add_route_config RouteConfig { route_path = (r, s, u), router = c }
 
 set_router :: Router -> Loli -> Loli
 set_router r x = x { current_router = r }
