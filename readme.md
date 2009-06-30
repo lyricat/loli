@@ -149,8 +149,8 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ## On the fly router switcher
 
-    -- router is just a regular middlware, can be switched to a 
-    -- different one anytime.
+    -- router can be switched at any time, it will effect any
+    -- following route path.
     
     router loli_router
 
