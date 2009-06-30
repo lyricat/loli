@@ -8,8 +8,6 @@ import Hack.Contrib.Utils
 
 type RoutePathT a   = (RequestMethod, String, a)
 type RoutePath      = RoutePathT AppUnit
-type EnvFilter      = Env -> Env
-type ResponseFilter = Response -> Response
 type Assoc          = [(String, String)]
 type AppState       = Response
 type AppReader      = Env
@@ -20,9 +18,9 @@ type Context        = Assoc
 
 data Loli = Loli
   {
-    routes :: [RoutePath]
+    routes      :: [RoutePath]
   , middlewares :: [Middleware]
-  , mimes :: Assoc
+  , mimes       :: Assoc
   }
 
 instance Default Loli where

@@ -18,32 +18,28 @@ pre_installed_middlewares =
   where
     set_view_root env =
       let hack_headers = env.hackHeaders
-          pre_config = [(loli_config ++ loli_views, loli_default_views)]
+          pre_config   = [(loli_config ++ loli_views, loli_default_views)]
       in
       env {hackHeaders = hack_headers ++ pre_config}
     default_content_type :: String
     default_content_type = "text/plain; charset=UTF-8"
-    
-loli_captures :: String
-loli_captures = "loli-captures-"
 
-loli_locals :: String
-loli_locals = "loli-locals-"
 
-loli_partials :: String
-loli_partials = "loli-partials-"
 
-loli_config :: String
-loli_config = "loli-config-"
-
-loli_layout :: String
-loli_layout = "layout"
-
-loli_views :: String
-loli_views = "views"
-
-loli_default_views :: String
-loli_default_views = "views"
-
+loli_captures       :: String
+loli_locals         :: String
+loli_partials       :: String
+loli_config         :: String
+loli_layout         :: String
+loli_views          :: String
+loli_default_views  :: String
 loli_layout_content :: String
+
+loli_captures       = "loli-captures-"
+loli_locals         = "loli-locals-"
+loli_partials       = "loli-partials-"
+loli_config         = "loli-config-"
+loli_layout         = "layout"
+loli_views          = "views"
+loli_default_views  = "views"
 loli_layout_content = "content"

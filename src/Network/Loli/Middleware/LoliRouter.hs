@@ -9,8 +9,9 @@ import MPS
 import Prelude hiding ((.), (>), (/))
 
 
-type RoutePathT a   = (RequestMethod, String, a)
-type Assoc          = [(String, String)]
+type RoutePathT a = (RequestMethod, String, a)
+type Assoc        = [(String, String)]
+
 
 loli_router :: String -> (a -> Application) -> [RoutePathT a] -> Middleware
 loli_router prefix runner h app' = \env'' ->
@@ -35,13 +36,14 @@ loli_router prefix runner h app' = \env'' ->
 
 
 parse_params :: String -> String -> Maybe (String, Assoc)
-parse_params "" ""   = Just ("", [])
-parse_params "" _    = Nothing
+parse_params "" ""  = Just ("", [])
+parse_params "" _   = Nothing
 parse_params "/" "" = Nothing
-parse_params "/" _ = Just ("/", [])
-parse_params t s =
+parse_params "/" _  = Just ("/", [])
+
+parse_params t s = 
   let template_tokens = t.split "/"
-      url_tokens = s.split "/"
+      url_tokens      = s.split "/"
   in
   if url_tokens.length < template_tokens.length
     then Nothing
@@ -65,8 +67,8 @@ parse_params t s =
 -- copy from loli utils
 put_namespace :: String -> Assoc -> Env -> Env
 put_namespace x xs env = 
-  let adds = xs.map_fst (x ++)
-      new_headers = adds.map fst
+  let adds             = xs.map_fst (x ++)
+      new_headers      = adds.map fst
       new_hack_headers = 
         env.custom.reject (fst > belongs_to new_headers) ++ adds
   in
