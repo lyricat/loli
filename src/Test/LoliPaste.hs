@@ -196,7 +196,7 @@ guess_lang :: String -> String
 guess_lang s = languages.find (is s).fromMaybe "txt"
 
 languages :: [String]
-languages = Kate.languages.map lower
+languages = "haskell" : Kate.languages.map lower .reject (is "haskell")
 
 options :: String
 options = languages.map make_option .join "\n"
