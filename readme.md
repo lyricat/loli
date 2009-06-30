@@ -51,7 +51,7 @@ check: <http://localhost:3000>
 
 ## Static
 
-    -- public serve, only allows /src
+    -- public serve, only allows `./src`
     public (Just ".") ["/src"]
 
 ## Views root
@@ -65,7 +65,6 @@ check: <http://localhost:3000>
 
     import Network.Loli.Template.TextTemplate
     
-    -- template
     get "/hi/:user" $ output (text_template "hello.html")
     
     -- in hello.html
