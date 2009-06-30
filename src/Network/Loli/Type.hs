@@ -30,10 +30,10 @@ data RouteConfig = RouteConfig
 
 data Loli = Loli
   {
-    current_router :: Router
-  , routes      :: [RouteConfig]
-  , middlewares :: [Middleware]
-  , mimes       :: Assoc
+    current_router  :: Router
+  , routes          :: [RouteConfig]
+  , middlewares     :: [Middleware]
+  , mimes           :: Assoc
   }
 
 
