@@ -19,18 +19,9 @@ main = run . loli $ do
   
     middleware lambda
     middleware show_status
-
-    {-
-    before $ \e -> do
-      print "before:"
-      print e
-      return e
     
-    after $ \r -> do
-      print "after:"
-      print r
-      return r
-    -}
+    before return
+    after return
 
     get "/bench"     $ do
       name <- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"

@@ -141,15 +141,11 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
     -- before takes a function of type (Env -> IO Env)
     before $ \e -> do
-      print "before:"
-      print e
+      putStrLn "before called"
       return e
     
     -- after takes that of type (Response -> IO Response)
-    after $ \r -> do
-      print "after:"
-      print r
-      return r
+    after return
 
 
 ## Hack integration
