@@ -160,5 +160,3 @@ If you see this, use the git version!
 ## Reference
 
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
-
-* About the naming: It's not that serious since I'm a manga fan / otaku.
