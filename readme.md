@@ -149,8 +149,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ## On the fly router switcher
 
-    -- router can be switched at any time, it will effect any
-    -- following route path.
+Router can be switched at any time, it will effect any route path that follows.
     
     router loli_router
 
