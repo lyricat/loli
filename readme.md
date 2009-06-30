@@ -156,3 +156,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 ## Note
 
 If you see this, use the git version!
+
+## Reference
+
+* loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
