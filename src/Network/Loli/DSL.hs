@@ -32,8 +32,9 @@ router x = update $ set_router x
 get, put, delete, post :: String -> AppUnit -> Unit
 get    = add_route GET
 put    = add_route PUT
-delete = add_route DELETE
 post   = add_route POST
+delete = add_route DELETE
+
 
 middleware :: Middleware -> Unit
 middleware = add_middleware > update
