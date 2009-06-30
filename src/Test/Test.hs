@@ -29,6 +29,7 @@ main = run . loli $ do
       name <- ask ^ params ^ lookup "name" ^ fromMaybe "nobody"
       html ("<h1>" ++ name ++ "</h1>")
 
+    -- on the fly router switcher
     router loli_router
 
     -- simple
