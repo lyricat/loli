@@ -6,15 +6,17 @@ import Data.Default
 import Hack
 import Hack.Contrib.Utils
 
-type RoutePathT a   = (RequestMethod, String, a)
-type RoutePath      = RoutePathT AppUnit
-type Assoc          = [(String, String)]
-type AppState       = Response
-type AppReader      = Env
+type RoutePathT a = (RequestMethod, String, a)
+type RoutePath    = RoutePathT AppUnit
+type Assoc        = [(String, String)]
 
-type AppUnitT       = ReaderT AppReader (StateT AppState IO)
-type AppUnit        = AppUnitT ()
-type Context        = Assoc
+type AppState     = Response
+type AppReader    = Env
+
+type AppUnitT     = ReaderT AppReader (StateT AppState IO)
+type AppUnit      = AppUnitT ()
+type Context      = Assoc
+
 
 data Loli = Loli
   {

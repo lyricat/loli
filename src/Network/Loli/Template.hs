@@ -35,9 +35,9 @@ partial_locals = ask ^ namespace loli_partials
 template_locals :: AppUnitT Context
 template_locals = do
   c <- captures
-  b <- locals
+  l <- locals
   p <- partial_locals
-  return (c ++ b ++ p)
+  return (c ++ l ++ p)
 
 render :: (Template a) => a -> AppUnitT String
 render x = do
