@@ -50,7 +50,8 @@ parse_params t s =
       in
       if rs.all isJust
         then 
-          let location = "/" / url_tokens.take (template_tokens.length).join "/"
+          let token_length = template_tokens.length
+              location     = "/" / url_tokens.take token_length .join "/"
           in
           Just $ (location, rs.map fromJust.filter isJust.map fromJust)
         else Nothing
