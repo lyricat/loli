@@ -15,9 +15,6 @@ nemesis = do
     sh "cabal configure"
     sh "cabal sdist"
 
-  desc "start console"
-  task "i" (sh "ghci -isrc src/Test.hs")
-
   desc "put all .hs files in manifest"
   task "manifest" $ do
     sh "find . | grep 'hs$' > manifest"
@@ -31,6 +28,7 @@ nemesis = do
 
   ghci "template" "Network/Loli/Template"
   ghci "ipaste" "Test/LoliPaste"
+  ghci "i" "Test/Test"
   
   bin "test" "Test/Test"
   bin "paste" "Test/LoliPaste"

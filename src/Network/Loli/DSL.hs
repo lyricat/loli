@@ -3,11 +3,13 @@ module Network.Loli.DSL where
 import Control.Monad.Reader
 import Control.Monad.State
 import Hack
+import Hack.Contrib.Middleware.Censor
 import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.Static
 import MPS
 import Network.Loli.Config
 import Network.Loli.Engine
+import Network.Loli.Middleware.IOConfig
 import Network.Loli.Type
 import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^))
@@ -32,6 +34,12 @@ post   = route POST
 
 middleware :: Middleware -> Unit
 middleware x = add_middleware x .update
+
+before :: (Env -> IO Env) -> Unit
+before f = middleware $ ioconfig f
+
+after :: (Response -> IO Response) -> Unit
+after f = middleware $ censor f
 
 mime :: String -> String -> Unit
 mime k v = add_mime k v .update

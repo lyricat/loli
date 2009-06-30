@@ -25,6 +25,7 @@ library
                       Network.Loli.Config
                       Network.Loli.DSL
                       Network.Loli.Engine
+                      Network.Loli.Middleware.IOConfig
                       Network.Loli.Middleware.LoliRouter
                       Network.Loli.Middleware.UserMime
                       Network.Loli.Template
