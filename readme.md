@@ -150,6 +150,8 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 ## On the fly router switcher
 
     -- a router is just a regular middlware, can be switched anytime
+    -- hence if you are not satisifed with the default loli router,
+    -- you can roll your own. You can contribute too.
     router loli_router
 
 ## Hack integration
