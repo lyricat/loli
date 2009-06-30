@@ -1,5 +1,5 @@
 {-
-  This demo file is licenced under GPL !
+  This demo file is licenced under GPL.
   
   - Jinjing Wang
 -}
