@@ -170,7 +170,7 @@ The router can be switched at any time, it will effect any route path that follo
 
 ## Note
 
-If you see this, use the git version!
+use the git version ...
 
 ## Reference
 
