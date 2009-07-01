@@ -9,14 +9,11 @@ import Network.Loli.Middleware.LoliRouter
 
 type RoutePathT a = (RequestMethod, String, a)
 type RoutePath    = RoutePathT AppUnit
-
-type Assoc        = [(String, String)]
-
-type AppState     = Response
 type AppReader    = Env
-
+type AppState     = Response
 type AppUnitT     = ReaderT AppReader (StateT AppState IO)
 type AppUnit      = AppUnitT ()
+type Assoc        = [(String, String)]
 type Context      = Assoc
 
 type RouterT a = String -> (a -> Application) -> RoutePathT a -> Middleware
