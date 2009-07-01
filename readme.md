@@ -6,7 +6,7 @@ A minimum web dev DSL
 
 First app
 
-    -- myloli.hs
+    -- myapp.hs
     
     import Network.Loli
     import Hack.Handler.Happstack
@@ -19,8 +19,8 @@ Install and compile:
     cabal install loli
     cabal install hack-handler-happstack
     
-    ghc --make myloli.hs
-    ./myloli
+    ghc --make myapp.hs
+    ./myapp
 
 check: <http://localhost:3000>
 
