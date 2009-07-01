@@ -17,7 +17,7 @@ import Network.Loli.Utils
 import Prelude hiding ((.), (/), (>), (^))
 
 run_app :: AppUnit -> Application
-run_app unit = \env -> runReaderT unit env .flip execStateT def
+run_app unit = \env -> runReaderT unit env .flip execStateT def {status = 200}
 
 loli :: Unit -> Application
 loli unit = run unit (not_found empty_app)

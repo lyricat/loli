@@ -33,6 +33,7 @@ nemesis = do
   bin "test" "Test/Test"
   bin "paste" "Test/LoliPaste"
   bin "myapp" "Test/myapp"
+  bin "debug" "Debug/Debug"
   
   
   -- test

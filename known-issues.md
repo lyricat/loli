@@ -1,2 +1,1 @@
-* safari display weird header info
 * unknown server socket error in LoliPaste.hs, it has something to do with unicode convertion, i.e. changing ls form MPSUTF8 to ls in MPS fix the problem, but encoding stays in utf-8 instead of plain unicode chars
