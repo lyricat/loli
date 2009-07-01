@@ -27,7 +27,7 @@ views :: String -> Unit
 views x = middleware $ config (set_namespace loli_config loli_views x)
 
 router :: Router -> Unit
-router x = update $ set_router x
+router = set_router > update
 
 get, put, post, delete :: String -> AppUnit -> Unit
 get    = add_route GET

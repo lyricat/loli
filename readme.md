@@ -40,6 +40,7 @@ check: <http://localhost:3000>
     
     delete "/" $ do
       -- ..
+
 ### Captures
 
     get "/say/:user/:message" $ do
