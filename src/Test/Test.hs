@@ -1,7 +1,6 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
 import Hack.Contrib.Middleware.Lambda
-import Hack.Contrib.Middleware.ShowStatus
 import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
@@ -20,7 +19,6 @@ main :: IO ()
 main = run . loli $ do
   
     middleware lambda
-    middleware show_status
     
     before return
     after return

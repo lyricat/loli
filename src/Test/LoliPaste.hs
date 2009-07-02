@@ -19,7 +19,6 @@ import Data.Maybe
 import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.ContentType
 import Hack.Contrib.Middleware.Lambda
-import Hack.Contrib.Middleware.ShowStatus
 import Hack.Contrib.Request hiding (content_type, port)
 import Hack.Contrib.Response
 import Hack.Contrib.Utils (unescape_uri, escape_html)
@@ -115,7 +114,6 @@ main = runWithConfig def {port = 5000}  $ loli $ do
   public (Just "public") ["/css", "/js"]
   
   middleware lambda
-  middleware show_status
   middleware $ content_type _TextHtml
   
   views "views/loli_paste"

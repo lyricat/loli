@@ -158,10 +158,10 @@ The router can be switched at any time, it will effect any route path that follo
 ### Use hack middleware
 
     import Hack.Contrib.Middleware.ETag
-    import Hack.Contrib.Middleware.ShowStatus
+    import Hack.Contrib.Middleware.Lambda
     
     middleware etag
-    middleware show_status
+    middleware lambda
 
 ### Convert loli into a hack application
 
