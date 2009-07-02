@@ -2,10 +2,6 @@
 
 A minimum web dev DSL
 
-## Ideal
-
-> There is no spoon.
-
 ## Example
 
 First app
