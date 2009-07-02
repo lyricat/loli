@@ -1,14 +1,26 @@
+2009.7.2
+--------
+
+### Features
+
+* before / after filter
+* On the fly router switcher
+
+### Fix
+
+* safari display weird header
+
 2009.6.29
 ---------
 
-### Feature
+### Features
 
 * Initial hackage release
 
 2009.6.27
 ---------
 
-### Feature
+### Features
 
 * add template
 * add local binding
@@ -17,7 +29,7 @@
 2009.6.26
 ---------
 
-### Feature
+### Features
 
 * add route
 
