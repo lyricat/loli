@@ -55,7 +55,7 @@ parse_params t s =
           let token_length = template_tokens.length
               location     = "/" / url_tokens.take token_length .join "/"
           in
-          Just $ (location, rs.map fromJust.filter isJust.map fromJust)
+          Just $ (location, rs.catMaybes.catMaybes)
         else Nothing
   
   where
