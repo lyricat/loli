@@ -1,4 +1,4 @@
-If you find the source code alienness, it's due to the use of "mps":http://github.com/nfjinjing/mps package. "Henry Laxen":http://mazatlan.ning.com/profile/henrylaxen has written a cheatsheet in
+If you find the code alienness, it's due to the use of "mps":http://github.com/nfjinjing/mps package. "Henry Laxen":http://mazatlan.ning.com/profile/henrylaxen has kindly written a cheatsheet of mps in
 
 * "html":http://www.maztravel.com/haskell/MPSexamples.html
 * "pdf":http://www.maztravel.com/haskell/MPSexamples.pdf
