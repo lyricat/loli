@@ -1,0 +1,7 @@
+If you find the source code alienness, it's due to the use of "mps":http://github.com/nfjinjing/mps package. "Henry Laxen":http://mazatlan.ning.com/profile/henrylaxen has written a cheatsheet in
+
+* "html":http://www.maztravel.com/haskell/MPSexamples.html
+* "pdf":http://www.maztravel.com/haskell/MPSexamples.pdf
+* "lhs":http://www.maztravel.com/haskell/MPSexamples.lhs
+
+that should help you get started.

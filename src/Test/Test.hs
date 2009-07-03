@@ -1,7 +1,8 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
 import Hack.Contrib.Middleware.Lambda
-import Hack.Handler.Happstack
+import Hack.Handler.SimpleServer
+-- import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
 import Network.Loli.Template.ConstTemplate (const_template)
@@ -16,7 +17,7 @@ import Hack.Contrib.Request
 -- default on port 3000
 
 main :: IO ()
-main = run . loli $ do
+main = run 3000 . loli $ do
   
     middleware lambda
     
@@ -86,7 +87,9 @@ main = run . loli $ do
         text "no-layout"
   
     -- default
-    get "/"         (text . show =<< ask)
+    get "/"         $ do
+      io . print =<< ask ^ url
+      text . show =<< ask
 
     -- public serve, only allows /src
     public (Just ".") ["/src"]
