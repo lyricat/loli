@@ -94,7 +94,7 @@ read x =  do
 
 -- Model helper
 format_no :: Int -> String
-format_no x = x.show.ljust 5 '0'
+format_no x = x.show.rjust 5 '0'
 
 exist :: String -> IO Bool
 exist x = doesFileExist (db / (x.u2b))
