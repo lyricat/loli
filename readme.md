@@ -175,6 +175,8 @@ use the git version ...
 
 ## [Wiki](http://wiki.github.com/nfjinjing/loli)
 
+* [Style](http://wiki.github.com/nfjinjing/loli/style)
+
 ## Reference
 
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
