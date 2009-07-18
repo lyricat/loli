@@ -93,6 +93,8 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ### with single partial
 
+    import Network.Loli.Template.ConstTemplate
+
     get "/single-partial" $ do
       partial "user" (const_template "const-user") $ do
         text . show =<< template_locals
