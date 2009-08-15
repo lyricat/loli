@@ -4,7 +4,7 @@ import Hack
 import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.ContentLength
 import Hack.Contrib.Middleware.ContentType
-import MPS.Light
+import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^))
 
 
@@ -16,11 +16,7 @@ pre_installed_middlewares =
   , config set_view_root
   ]
   where
-    set_view_root env =
-      let hack_headers = env.hackHeaders
-          pre_config   = [(loli_config ++ loli_views, loli_default_views)]
-      in
-      env {hackHeaders = hack_headers ++ pre_config}
+    set_view_root = set_namespace loli_config loli_views loli_default_views
     default_content_type :: String
     default_content_type = "text/plain; charset=UTF-8"
 

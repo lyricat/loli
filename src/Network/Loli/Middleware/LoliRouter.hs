@@ -6,6 +6,7 @@ import Hack.Contrib.Utils
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Prelude hiding ((.), (>), (/))
+import Data.ByteString.UTF8 (fromString)
 
 
 type RoutePathT a = (RequestMethod, String, a)
@@ -65,11 +66,12 @@ parse_params t s =
       | otherwise = Nothing
       
 -- copy from loli utils
-put_namespace :: String -> Assoc -> Env -> Env
+put_namespace :: String -> [(String, String)] -> Env -> Env
 put_namespace x xs env = 
-  let adds             = xs.map_fst (x ++)
+  let adds             = xs.map_fst (x ++) .map_fst fromString .map_snd fromString
       new_headers      = adds.map fst
       new_hack_headers = 
-        env.custom.reject (fst > belongs_to new_headers) ++ adds
+        env.hackCache.reject (fst > belongs_to new_headers) ++ adds
   in
-  env {hackHeaders = new_hack_headers}
+  env {hackCache = new_hack_headers}
+
