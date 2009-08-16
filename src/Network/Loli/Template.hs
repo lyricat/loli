@@ -12,20 +12,20 @@ import Network.Loli.Template.TextTemplate
 import Network.Loli.Type
 import Network.Loli.Utils
 import Data.Maybe
-import Prelude hiding ((.), (>), (^), (/))
+import Prelude hiding ((.), (>), (^), (-), (/))
 import qualified Control.Monad.State as State
 
 -- simple
 text :: String -> AppUnit
 text x = do
-  update $ set_content_type _TextPlain
-  update $ set_body (x.fromString)
+  update - set_content_type _TextPlain
+  update - set_body (x.fromString)
   render_layout
 
 html :: String -> AppUnit
 html x = do
-  update $ set_content_type _TextHtml
-  update $ set_body (x.fromString)
+  update - set_content_type _TextHtml
+  update - set_body (x.fromString)
   render_layout
 
 -- template
@@ -55,7 +55,7 @@ render_layout = do
       Nothing -> return ()
       Just layout_template -> do
         s <- State.get ^ body ^ toString
-        local (set_namespace loli_partials loli_layout_content s) $ do
+        local (set_namespace loli_partials loli_layout_content s) - do
           render (text_template layout_template) 
             >>= fromString > set_body > update
 

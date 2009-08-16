@@ -80,7 +80,7 @@ list = ls db ^ rsort >>= mapM read
 read :: String -> IO Paste
 read x =  do
   src <- readFile (db / x)
-  return $ def {no, lang, user, src}
+  return - def {no, lang, user, src}
   where
     no = x.split sep .first .P.read :: Int
     lang = x.split "\\." .last
@@ -109,22 +109,22 @@ link x = "/" ++ x.paste_id
 
 -- Controller
 main :: IO ()
-main = runWithConfig def {port = 5000}  $ loli $ do
+main = runWithConfig def {port = 5000}  - loli - do
 
   public (Just "public") ["/css", "/js"]
   
   middleware lambda
-  middleware $ content_type _TextHtml
+  middleware - content_type _TextHtml
   
   views "views/loli_paste"
   layout "layout.html"
   
   
-  get "/create" $ do
-    bind "options" options $ do
-      output $ text_template "create.html"
+  get "/create" - do
+    bind "options" options - do
+      output - text_template "create.html"
   
-  get "/:paste" $ do
+  get "/:paste" - do
     name <- captures ^ lookup "paste" ^ fromJust ^ unescape_uri ^ b2u
     if ".." `isInfixOf` name
       then html "no permission"
@@ -135,16 +135,16 @@ main = runWithConfig def {port = 5000}  $ loli $ do
             paste <- read name .io
             raw <- ask ^ params ^ lookup "raw"
             case raw of
-              Just "true" -> no_layout $ text (paste.src)
+              Just "true" -> no_layout - text (paste.src)
               _ -> do
                 context 
                   [ ("paste_id", paste.paste_id)
                   , ("src", paste.src.kate (paste.lang.guess_lang))
-                  ] $ output $ text_template "view.html"
+                  ] - output - text_template "view.html"
         
           else html "paste missing"
 
-  post "/" $ do
+  post "/" - do
     form <- ask ^ inputs ^ map_snd unescape_unicode_xml
     let src'  = form.lookup "src"
         user' = form.lookup "user"
@@ -171,21 +171,21 @@ main = runWithConfig def {port = 5000}  $ loli $ do
             no <- ls db .io ^ rsort ^ first ^ get_id ^ (+1)
             paste { no } .create .io
         
-        update $ redirect "/" Nothing
+        update - redirect "/" Nothing
               
   -- default
-  get "/" $ do
+  get "/" - do
     pastes <- list .io ^ take 50
     let rows = pastes.map row .concat
-    bind "rows" rows $ do
-      output $ text_template "list.html"
+    bind "rows" rows - do
+      output - text_template "list.html"
 
 -- View helper
 
 kate :: String -> String -> String
 kate language code = 
   case highlightAs language code of
-    Right result -> renderHtmlFragment $ 
+    Right result -> renderHtmlFragment - 
         formatAsXHtml [] language result
     Left  _    -> "<pre><code>" ++ code ++ "</code></pre>"
 

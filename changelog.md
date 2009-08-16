@@ -1,3 +1,11 @@
+2009.8.16
+---------
+
+### Feature
+
+* use hackCache for performance
+* no $ noise
+
 2009.7.2
 --------
 

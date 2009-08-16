@@ -3,7 +3,7 @@ module Network.Loli.Utils where
 import Control.Monad.State
 import Hack
 import MPS.Light
-import Prelude hiding ((.), (/), (>), (^))
+import Prelude hiding ((.), (/), (>), (^), (-))
 import Data.ByteString.UTF8 (fromString, toString)
 
 namespace :: String -> Env -> [(String, String)]

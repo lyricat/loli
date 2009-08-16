@@ -2,7 +2,7 @@
 import Hack.Handler.Happstack
 import Data.ByteString.Lazy.Char8 
 import Hack
-import Prelude hiding ((.), (>), (/), (^))
+import Prelude hiding ((.), (>), (/), (^), (-))
 import MPS.Light
 import Hack.Contrib.Response
 import Data.Default
@@ -14,6 +14,6 @@ app = \env -> do
   return r
 
 
--- main' = run . loli $ get "/" (text "loli power")
+-- main' = run . loli - get "/" (text "loli power")
 
 main = run app

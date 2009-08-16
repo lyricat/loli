@@ -4,7 +4,7 @@ import Control.Arrow ((***))
 import Data.ByteString.Lazy.UTF8
 import MPS
 import Network.Loli.Type
-import Prelude hiding ((.), (>), (^), (/))
+import Prelude hiding ((.), (>), (^), (-), (/))
 import Text.Template hiding (Context, Template, template)
 import qualified Text.Template as T
 

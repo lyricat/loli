@@ -5,7 +5,7 @@ import Hack.Contrib.Middleware.Config
 import Hack.Contrib.Middleware.ContentLength
 import Hack.Contrib.Middleware.ContentType
 import Network.Loli.Utils
-import Prelude hiding ((.), (>), (^))
+import Prelude hiding ((.), (>), (^), (-))
 
 
 pre_installed_middlewares :: [Middleware]

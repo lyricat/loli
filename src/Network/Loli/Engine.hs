@@ -14,7 +14,7 @@ import Network.Loli.Middleware.LoliRouter ()
 import Network.Loli.Middleware.UserMime
 import Network.Loli.Type
 import Network.Loli.Utils
-import Prelude hiding ((.), (/), (>), (^))
+import Prelude hiding ((.), (/), (>), (^), (-))
 
 run_app :: AppUnit -> Application
 run_app unit = \env -> runReaderT unit env .flip execStateT def {status = 200}
@@ -41,7 +41,7 @@ add_route_config r s = let xs = s.routes in s {routes = xs.insert_last r}
 add_route :: RequestMethod -> String -> AppUnit -> Unit
 add_route r s u = do
   c <- get ^ current_router
-  update $ add_route_config RouteConfig { route_path = (r, s, u), router = c }
+  update - add_route_config RouteConfig { route_path = (r, s, u), router = c }
 
 set_router :: Router -> Loli -> Loli
 set_router r x = x { current_router = r }

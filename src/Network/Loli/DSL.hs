@@ -12,7 +12,7 @@ import Network.Loli.Engine
 import Network.Loli.Middleware.IOConfig
 import Network.Loli.Type
 import Network.Loli.Utils
-import Prelude hiding ((.), (>), (^))
+import Prelude hiding ((.), (>), (^), (-))
 import qualified Control.Monad.State as State
 
 
@@ -21,10 +21,10 @@ app f = ask >>= (f > io) >>= State.put
 
 
 layout :: String -> Unit
-layout x = middleware $ config (set_namespace loli_config loli_layout x)
+layout x = middleware - config (set_namespace loli_config loli_layout x)
 
 views :: String -> Unit
-views x = middleware $ config (set_namespace loli_config loli_views x)
+views x = middleware - config (set_namespace loli_config loli_views x)
 
 router :: Router -> Unit
 router = set_router > update
@@ -49,7 +49,7 @@ mime :: String -> String -> Unit
 mime k v = add_mime k v .update
 
 public :: Maybe String -> [String] -> Unit
-public r xs = middleware $ static r xs
+public r xs = middleware - static r xs
 
 io :: (MonadIO m) => IO a -> m a
 io = liftIO

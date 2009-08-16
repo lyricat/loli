@@ -9,11 +9,11 @@ loli is a DSL built on hack. It allows you to easily define routes, build your c
         import Network.Loli
         import Hack.Handler.Happstack
 
-        main = run . loli $ get "/" (text "loli power")
+        main = run . loli - get "/" (text "loli power")
         
 * route
 
-        get "/hello" $ do
+        get "/hello" - do
           text "hello"
 
     will route "/hello" to a controller that outputs hello.
@@ -35,7 +35,7 @@ loli is a DSL built on hack. It allows you to easily define routes, build your c
 
     After implementing your own template engine, you can use
     
-        output $ your-engine-constructor "template-name"
+        output - your-engine-constructor "template-name"
 
 * demo
 

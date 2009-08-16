@@ -5,7 +5,7 @@ import Hack
 import Hack.Contrib.Utils
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
-import Prelude hiding ((.), (>), (/))
+import Prelude hiding ((.), (>), (/), (-))
 import Data.ByteString.UTF8 (fromString)
 
 
@@ -56,12 +56,12 @@ parse_params t s =
           let token_length = template_tokens.length
               location     = "/" / url_tokens.take token_length .join "/"
           in
-          Just $ (location, rs.catMaybes.catMaybes)
+          Just - (location, rs.catMaybes.catMaybes)
         else Nothing
   
   where
     capture x y 
-      | x.starts_with ":" = Just $ Just (x.tail, y)
+      | x.starts_with ":" = Just - Just (x.tail, y)
       | x == y = Just Nothing
       | otherwise = Nothing
       
