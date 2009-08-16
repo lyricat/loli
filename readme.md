@@ -10,8 +10,10 @@ First app
     
     import Network.Loli
     import Hack.Handler.Happstack
+    import MPS.Light ((-))
+    import Prelude hiding ((-))
     
-    main = run . loli $ get "/" (text "loli power")
+    main = run . loli - get "/" (text "loli power")
 
 Install and compile:
 
@@ -29,21 +31,21 @@ check: <http://localhost:3000>
 
 ### Verbs
 
-    get "/" $ do
+    get "/" - do
       -- something for a get request
 
-    post "/" $ do
+    post "/" - do
       -- for a post request
     
-    put "/" $ do
+    put "/" - do
       -- put ..
     
-    delete "/" $ do
+    delete "/" - do
       -- ..
 
 ### Captures
 
-    get "/say/:user/:message" $ do
+    get "/say/:user/:message" - do
       text . show =<< captures
 
     -- /say/jinjing/hello will output
@@ -66,7 +68,7 @@ check: <http://localhost:3000>
 
     import Network.Loli.Template.TextTemplate
     
-    get "/hi/:user" $ output (text_template "hello.html")
+    get "/hi/:user" - output (text_template "hello.html")
     
     -- in hello.html
     <html>
@@ -78,13 +80,13 @@ check: <http://localhost:3000>
 
 ### Local binding
 
-    get "/local-binding" $ do
-      bind "user" "alice" $ output (text_template "hello.html")
+    get "/local-binding" - do
+      bind "user" "alice" - output (text_template "hello.html")
 
 ### Batched local bindings
 
-    get "/batched-local-binding" $ do
-      context [("user", "alice"), ("password", "foo")] $ 
+    get "/batched-local-binding" - do
+      context [("user", "alice"), ("password", "foo")] - 
         text . show =<< locals
 
 ## Partials
@@ -95,24 +97,24 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
     import Network.Loli.Template.ConstTemplate
 
-    get "/single-partial" $ do
-      partial "user" (const_template "const-user") $ do
+    get "/single-partial" - do
+      partial "user" (const_template "const-user") - do
         text . show =<< template_locals
 
 ### with batched partials
 
-    get "/group-partial" $ do
+    get "/group-partial" - do
       partials 
         [ ("user", const_template "alex")
         , ("password", const_template "foo")
-        ] $ output (text_template "hello.html")
+        ] - output (text_template "hello.html")
 
 ## Layout
 
 ### Local
 
-    get "/with-layout" $ do
-      with_layout "layout.html" $ do
+    get "/with-layout" - do
+      with_layout "layout.html" - do
         text "layout?"
     
     -- in layout.html
@@ -129,8 +131,8 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 
 ### By passed
 
-    get "/no-layout" $ do
-      no_layout $ do
+    get "/no-layout" - do
+      no_layout - do
         text "no-layout"
 
 
@@ -142,7 +144,7 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 ## Filters
 
     -- before takes a function of type (Env -> IO Env)
-    before $ \e -> do
+    before - \e -> do
       putStrLn "before called"
       return e
     
