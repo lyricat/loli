@@ -7,11 +7,11 @@ import Control.Monad.State hiding (join)
 import Data.Default
 import Hack
 import Hack.Contrib.Middleware.NotFound
+import Hack.Contrib.Middleware.UserMime
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
 import Network.Loli.Middleware.LoliRouter ()
-import Network.Loli.Middleware.UserMime
 import Network.Loli.Type
 import Network.Loli.Utils
 import Prelude hiding ((.), (/), (>), (^), (-))

@@ -5,16 +5,15 @@ import Control.Monad.State
 import Hack
 import Hack.Contrib.Middleware.Censor
 import Hack.Contrib.Middleware.Config
+import Hack.Contrib.Middleware.IOConfig
 import Hack.Contrib.Middleware.Static
 import MPS
 import Network.Loli.Config
 import Network.Loli.Engine
-import Network.Loli.Middleware.IOConfig
 import Network.Loli.Type
 import Network.Loli.Utils
 import Prelude hiding ((.), (>), (^), (-))
 import qualified Control.Monad.State as State
-
 
 app :: Application -> AppUnit
 app f = ask >>= (f > io) >>= State.put
