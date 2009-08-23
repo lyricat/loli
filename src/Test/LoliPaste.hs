@@ -33,7 +33,7 @@ import Network.Loli.Utils
 import System.Directory
 import Text.Highlighting.Kate (highlightAs, formatAsXHtml)
 import Text.XHtml.Strict (renderHtmlFragment)
-import UTF8Prelude hiding ((^), (.), (>), (/), read)
+import UTF8Prelude hiding ((^), (.), (>), (/), read, (-))
 import qualified MPSUTF8 as MPS
 import qualified Prelude as P
 import qualified Text.Highlighting.Kate as Kate (languages)
