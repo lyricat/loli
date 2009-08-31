@@ -15,19 +15,12 @@ type Assoc        = [(String, String)]
 
 loli_router :: String -> (a -> Application) -> RoutePathT a -> Middleware
 loli_router prefix runner route_path app = \env ->
-  let path             = env.path_info
-      script           = env.script_name
-      mod_env location = env 
-        { scriptName  = script ++ location
-        , pathInfo    = path.drop (location.length)
-        }
-  in
   if route_path.match_route env.not
     then app env
     else do
       let (_, template, app_state) = route_path
-          (location, params) = parse_params template path .fromJust
-      runner app_state (mod_env location .merge_captured params)
+          (_, params) = parse_params template (env.path_info) .fromJust
+      runner app_state (env .merge_captured params)
   where
     match_route env' (method, template, _) = 
       env'.request_method.is method 
