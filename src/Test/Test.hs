@@ -1,6 +1,5 @@
 import Control.Monad.Reader
 import Hack.Contrib.Response
-import Hack.Contrib.Middleware.Lambda
 import Hack.Handler.SimpleServer
 -- import Hack.Handler.Happstack
 import Network.Loli
@@ -19,7 +18,6 @@ import Hack.Contrib.Request
 main :: IO ()
 main = run 3000 . loli - do
   
-    middleware lambda
     
     before return
     after return

@@ -6,7 +6,6 @@ import Control.Monad.Reader hiding (join)
 import Control.Monad.State hiding (join)
 import Data.Default
 import Hack
-import Hack.Contrib.Middleware.NotFound
 import Hack.Contrib.Middleware.UserMime
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
@@ -20,8 +19,9 @@ run_app :: AppUnit -> Application
 run_app unit = \env -> runReaderT unit env .flip execStateT def {status = 200}
 
 loli :: Unit -> Application
-loli unit = run unit (not_found empty_app)
+loli unit = run unit basic_app
   where
+    basic_app _ = return - def {status = 200}
     run_route x = (x.router) loli_captures run_app (x.route_path)
     
     run :: Unit -> Middleware
