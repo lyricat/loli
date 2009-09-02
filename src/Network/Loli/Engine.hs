@@ -7,6 +7,7 @@ import Control.Monad.State hiding (join)
 import Data.Default
 import Hack
 import Hack.Contrib.Middleware.UserMime
+import Hack.Contrib.Middleware.NotFound
 import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Network.Loli.Config
@@ -16,12 +17,12 @@ import Network.Loli.Utils
 import Prelude hiding ((.), (/), (>), (^), (-))
 
 run_app :: AppUnit -> Application
-run_app unit = \env -> runReaderT unit env .flip execStateT def {status = 200}
+run_app unit = \env -> runReaderT unit env .flip execStateT def {status = 200} ^ trace'
 
 loli :: Unit -> Application
-loli unit = run unit basic_app
+loli unit = run unit not_found_app
   where
-    basic_app _ = return - def {status = 200}
+    not_found_app = not_found dummy_app
     run_route x = (x.router) loli_captures run_app (x.route_path)
     
     run :: Unit -> Middleware
