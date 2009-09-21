@@ -7,6 +7,7 @@ import Hack.Contrib.Utils hiding (get, put)
 import MPS
 import Prelude hiding ((.), (>), (/), (-))
 import Data.ByteString.UTF8 (fromString)
+import qualified Prelude as P
 
 
 type RoutePathT a = (RequestMethod, String, a)
@@ -39,7 +40,7 @@ parse_params t s =
   let template_tokens = t.split "/"
       url_tokens      = s.split "/"
   in
-  if url_tokens.length < template_tokens.length
+  if url_tokens.length P.< template_tokens.length
     then Nothing
     else 
       let rs = zipWith capture template_tokens url_tokens
