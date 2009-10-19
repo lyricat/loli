@@ -10,10 +10,8 @@ First app
     
     import Network.Loli
     import Hack.Handler.Happstack
-    import MPS.Light ((-))
-    import Prelude hiding ((-))
     
-    main = run . loli - get "/" (text "loli power")
+    main = run . loli $ get "/" (text "loli power")
 
 Install and compile:
 
@@ -30,6 +28,10 @@ check: <http://localhost:3000>
 ## Routes
 
 ### Verbs
+
+    -- use - instead of $ for clarity
+    import MPS.Light ((-))
+    import Prelude hiding ((-))
 
     get "/" - do
       -- something for a get request
@@ -150,12 +152,6 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
     
     -- after takes that of type (Response -> IO Response)
     after return
-
-## On the fly router switcher
-
-The router can be switched at any time, it will effect any route path that follows.
-    
-    router loli_router
 
 ## Hack integration
 
