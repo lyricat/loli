@@ -32,18 +32,23 @@ check: <http://localhost:3000>
     -- use - instead of $ for clarity
     import MPS.Light ((-))
     import Prelude hiding ((-))
-
-    get "/" - do
-      -- something for a get request
-
-    post "/" - do
-      -- for a post request
     
-    put "/" - do
-      -- put ..
+    import Network.Loli
+    import Hack.Handler.Happstack
     
-    delete "/" - do
-      -- ..
+    main = run . loli - do
+
+      get "/" - do
+        -- something for a get request
+
+      post "/" - do
+        -- for a post request
+    
+      put "/" - do
+        -- put ..
+    
+      delete "/" - do
+        -- ..
 
 ### Captures
 
