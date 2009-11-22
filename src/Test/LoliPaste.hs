@@ -19,6 +19,7 @@ import Data.Maybe
 import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.ContentType
 import Hack.Contrib.Middleware.Lambda
+import Hack.Contrib.Middleware.SimpleAccessLogger
 import Hack.Contrib.Request hiding (content_type, port)
 import Hack.Contrib.Response
 import Hack.Contrib.Utils (unescape_uri, escape_html)
@@ -115,6 +116,7 @@ main = runWithConfig def {port = 5000}  - loli - do
   
   middleware lambda
   middleware - content_type _TextHtml
+  middleware - simple_access_logger Nothing
   
   views "views/loli_paste"
   layout "layout.html"
