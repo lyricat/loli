@@ -188,4 +188,4 @@ use the git version ...
 
 ## 绿坝娘
 
-![rika](http://github.com/nfjinjing/rika/raw/master/rika-engine/doc/img/Luba_girl_.jpg)
+![rika](http://github.com/nfjinjing/rika/raw/master/rika-engine/doc/img/Luba_girl.jpg)
