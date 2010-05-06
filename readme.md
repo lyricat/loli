@@ -9,7 +9,7 @@ First app
     -- myapp.hs
     
     import Network.Loli
-    import Hack.Handler.Happstack
+    import Hack.Handler.Hyena
     
     main = run . loli $ get "/" (text "loli power")
 
@@ -17,7 +17,7 @@ Install and compile:
 
     cabal update
     cabal install loli
-    cabal install hack-handler-happstack
+    cabal install hack-handler-hyena
     
     ghc --make myapp.hs
     ./myapp
@@ -34,7 +34,7 @@ check: <http://localhost:3000>
     import Prelude hiding ((-))
     
     import Network.Loli
-    import Hack.Handler.Happstack
+    import Hack.Handler.Hyena
     
     main = run . loli - do
 
