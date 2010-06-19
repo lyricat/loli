@@ -188,7 +188,7 @@ use the git version ...
 
 ## Who is Louise Françoise Le Blanc de La Vallière (ルイズ Ruizu?)?
 
-<http://en.wikipedia.org/wiki/The_Familiar_of_Zero#Main_characters>
-
-![louise](http://github.com/nfjinjing/loli/raw/master/louise.jpg)
+<a href="http://en.wikipedia.org/wiki/The_Familiar_of_Zero#Main_characters">
+  <img src="http://github.com/nfjinjing/loli/raw/master/louise.jpg" alt="louise" />
+</a>
 
