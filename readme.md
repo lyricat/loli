@@ -186,7 +186,7 @@ use the git version ...
 
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
 
-## Who is Louise Françoise Le Blanc de La Vallière (ルイズ Ruizu?)?
+## Loli ??
 
 <http://en.wikipedia.org/wiki/The_Familiar_of_Zero#Main_characters>
 
