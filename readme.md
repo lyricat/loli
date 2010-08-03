@@ -4,8 +4,6 @@ A minimum web dev DSL
 
 ## Example
 
-First app
-
     import Network.Loli
     import Hack.Handler.Happstack
     
