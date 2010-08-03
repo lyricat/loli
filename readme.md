@@ -13,7 +13,7 @@ First app
     
     main = run . loli $ get "/" (text "loli power")
 
-Install and compile:
+## Installation
 
     cabal update
     cabal install loli
