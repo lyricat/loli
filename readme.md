@@ -179,10 +179,6 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
 * use the git version ...
 * it's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... there are lots of choices, your are in IO, go nuts.
 
-## [Wiki](http://wiki.github.com/nfjinjing/loli)
-
-* [Style](http://wiki.github.com/nfjinjing/loli/style)
-
 ## Reference
 
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
