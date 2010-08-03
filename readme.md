@@ -22,6 +22,9 @@ A minimum web dev DSL
 
 check: <http://localhost:3000>
 
+## Quick reference
+
+<http://github.com/nfjinjing/loli/blob/master/src/Test/Test.hs>
 
 ## Routes
 
