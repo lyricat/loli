@@ -6,8 +6,6 @@ A minimum web dev DSL
 
 First app
 
-    -- myapp.hs
-    
     import Network.Loli
     import Hack.Handler.Happstack
     
@@ -18,6 +16,8 @@ First app
     cabal update
     cabal install loli
     cabal install hack-handler-happstack
+    
+    -- copy and paste the above example to myapp.hs
     
     ghc --make myapp.hs
     ./myapp
