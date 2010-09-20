@@ -11,7 +11,7 @@ A minimum web dev DSL
 
 ## Note
 
-    * It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
+* It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
     
 ## Installation
 
