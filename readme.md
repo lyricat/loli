@@ -9,6 +9,10 @@ A minimum web dev DSL
     
     main = run . loli $ get "/" (text "loli power")
 
+## Note
+
+    * It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
+    
 ## Installation
 
     cabal update
@@ -25,6 +29,7 @@ check: <http://localhost:3000>
 ## Quick reference
 
 <http://github.com/nfjinjing/loli/blob/master/src/Test/Test.hs>
+
 
 ## Routes
 
@@ -65,85 +70,6 @@ check: <http://localhost:3000>
     -- public serve, only allows `./src`
     public (Just ".") ["/src"]
 
-## Views root
-
-    -- in `./views`, can be changed by
-    views "template"
-
-## Template
-
-### Text Template
-
-    import Network.Loli.Template.TextTemplate
-    
-    get "/hi/:user" - output (text_template "hello.html")
-    
-    -- in hello.html
-    <html>
-    <title>hello</title>
-    <body>
-      <p>hello $user</p>
-    </body>
-    </html>
-
-### Local binding
-
-    get "/local-binding" - do
-      bind "user" "alice" - output (text_template "hello.html")
-
-### Batched local bindings
-
-    get "/batched-local-binding" - do
-      context [("user", "alice"), ("password", "foo")] - 
-        text . show =<< locals
-
-## Partials
-
-Partials are treated the same as user supplied bindings, i.e. the rendered text is available to the rest of templates, referenced by user supplied keywords.
-
-### with single partial
-
-    import Network.Loli.Template.ConstTemplate
-
-    get "/single-partial" - do
-      partial "user" (const_template "const-user") - do
-        text . show =<< template_locals
-
-### with batched partials
-
-    get "/group-partial" - do
-      partials 
-        [ ("user", const_template "alex")
-        , ("password", const_template "foo")
-        ] - output (text_template "hello.html")
-
-## Layout
-
-### Local
-
-    get "/with-layout" - do
-      with_layout "layout.html" - do
-        text "layout?"
-    
-    -- in layout.html
-    <html>
-    <body>
-      <h1>using a layout</h1>
-      $content
-    </body>
-    </html>
-
-### Global
-
-    layout "layout.html"
-
-### By passed
-
-    get "/no-layout" - do
-      no_layout - do
-        text "no-layout"
-
-
 ## Mime types
 
     -- treat .hs extension as text/plain
@@ -174,11 +100,6 @@ Partials are treated the same as user supplied bindings, i.e. the rendered text 
     -- in Network.Loli.Engine
     
     loli :: Unit -> Application
-
-## Hints
-
-* use the git version ...
-* it's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... there are lots of choices, your are in IO, go nuts.
 
 ## Reference
 
