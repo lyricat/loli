@@ -86,6 +86,8 @@ check: <http://localhost:3000>
 
 ### Use hack middleware
 
+    -- note both etag and lambda middleware are removed ... for somce ghc 7.0 compatability ><
+    
     import Hack.Contrib.Middleware.ETag
     import Hack.Contrib.Middleware.Lambda
     
