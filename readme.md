@@ -42,8 +42,7 @@ check: <http://localhost:3000>
     main = run . loli - do
 
       get "/" - do
-        -- output string as text/html
-        html "<p>hello</p>"
+        -- something for a get request
 
       post "/" - do
         -- for a post request
@@ -99,9 +98,12 @@ check: <http://localhost:3000>
     
     loli :: Unit -> Application
 
-## Note
+## Hints
 
 * It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
+* When inspecting the request, use `ask` defined in `ReaderT` monad to get the `Hack.Environment`, then use helper method defined in `Hack.Contrib.Request` to query it.
+* `Response` is in `StateT`, `html` and `text` are simply helper methods that update the state, i.e. setting the response body, content-type, etc.
+* You do need to understand monad transformers to hack reasonably happy with `loli`.
     
 ## Reference
 
