@@ -1,7 +1,7 @@
-import Control.Monad.Reader
+import "mtl" Control.Monad.Reader
 import Hack.Contrib.Response
-import Hack.Handler.SimpleServer
--- import Hack.Handler.Happstack
+-- import Hack.Handler.SimpleServer
+import Hack.Handler.Happstack
 import Network.Loli
 import Network.Loli.Engine
 import Network.Loli.Template.ConstTemplate (const_template)
@@ -16,7 +16,7 @@ import Hack.Contrib.Request
 -- default on port 3000
 
 main :: IO ()
-main = run 3000 . loli - do
+main = run . loli - do
   
     
     before return
