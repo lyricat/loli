@@ -101,10 +101,6 @@ check: <http://localhost:3000>
     loli :: Unit -> Application
 
 
-## Sample view with moe combinator
-
-
-
 ## Hints
 
 * It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Examples can still be found in `src/Test/Test.hs`. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
