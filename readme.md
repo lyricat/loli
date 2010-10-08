@@ -9,10 +9,7 @@ A minimum web dev DSL
     
     main = run . loli $ get "/" (text "loli power")
 
-## Note
 
-* It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
-    
 ## Installation
 
     cabal update
@@ -45,7 +42,8 @@ check: <http://localhost:3000>
     main = run . loli - do
 
       get "/" - do
-        -- something for a get request
+        -- output string as text/html
+        html "<p>hello</p>"
 
       post "/" - do
         -- for a post request
@@ -101,6 +99,10 @@ check: <http://localhost:3000>
     
     loli :: Unit -> Application
 
+## Note
+
+* It's recommended to use your own html combinator / template engine, loli's template system is for completeness rather then usefulness... The author has removed the section on view from this readme. Try DIY with, e.g. [moe](http://github.com/nfjinjing/moe). The template code will stay for, say, a few years, but will eventually fade away.
+    
 ## Reference
 
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
