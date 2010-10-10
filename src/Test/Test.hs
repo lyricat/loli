@@ -1,3 +1,5 @@
+{-# LANGUAGE PackageImports #-}
+
 import "mtl" Control.Monad.Reader
 import Hack.Contrib.Response
 -- import Hack.Handler.SimpleServer
