@@ -115,3 +115,8 @@ check: <http://localhost:3000>
 * loli is inspired by [Rack](http://rack.rubyforge.org), [Rails](http://rubyonrails.org), [Ramaze](http://ramaze.net), [Happstack](http://happstack.com/) and [Sinatra](http://www.sinatrarb.com/).
 
 
+<br/>
+<br/>
+
+
+<a href="http://en.wikipedia.org/wiki/Shinryaku!_Ika_Musume"><img src="http://github.com/nfjinjing/loli/raw/master/Ita.jpg"/></a>
