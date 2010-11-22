@@ -118,5 +118,5 @@ check: <http://localhost:3000>
 <br/>
 
 <p>
-<a href="http://en.wikipedia.org/wiki/Shinryaku!_Ika_Musume"><img src="http://github.com/nfjinjing/loli/raw/master/Ita.jpg"/></a>
+<a href="http://en.wikipedia.org/wiki/Shinryaku!_Ika_Musume"><img src="https://github.com/nfjinjing/loli/raw/master/Ita.jpg"/></a>
 </p>
