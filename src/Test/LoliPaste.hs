@@ -6,19 +6,20 @@
 
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE PackageImports #-}
+
 
 {- cabal install highlighting-kate
  - cabal install utf8-prelude
  - cabal install hack-handler-happstack
  -}
 
-import Control.Monad.Reader hiding (join)
+import "mtl" Control.Monad.Reader hiding (join)
 import Data.Default
 import Data.List
 import Data.Maybe
 import Hack.Contrib.Constants
 import Hack.Contrib.Middleware.ContentType
-import Hack.Contrib.Middleware.Lambda
 import Hack.Contrib.Middleware.SimpleAccessLogger
 import Hack.Contrib.Request hiding (content_type, port)
 import Hack.Contrib.Response
@@ -110,11 +111,16 @@ link x = "/" ++ x.paste_id
 
 -- Controller
 main :: IO ()
-main = runWithConfig def {port = 5000}  - loli - do
+main = do
+  
+  let port = 5000
+  
+  putStrLn - "loli paste on port: " ++ show port
+    
+  runWithConfig def {port}  - loli - do
 
   public (Just "public") ["/css", "/js"]
   
-  middleware lambda
   middleware - content_type _TextHtml
   middleware - simple_access_logger Nothing
   
