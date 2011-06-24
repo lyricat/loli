@@ -31,10 +31,12 @@ loli_router prefix runner route_path app = \env ->
 
 
 parse_params :: String -> String -> Maybe (String, Assoc)
+parse_params "*" x = Just (x, [])
 parse_params "" ""  = Just ("", [])
 parse_params "" _   = Nothing
 parse_params "/" "" = Nothing
 parse_params "/" "/"  = Just ("/", [])
+
 
 parse_params t s = 
   let template_tokens = t.split "/"
