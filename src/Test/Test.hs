@@ -89,8 +89,14 @@ main = run . loli - do
     -- default
     get "/" - do
       io . print =<< ask ^ url
-      text . show =<< ask
-
+      text "match /"
+    
+    get "/test-star/*/hi" - do
+      text "test-star/*/hi"
+    
+    get "*" - do
+      text "match everything"
+      
     -- public serve, only allows /src
     public (Just ".") ["/src"]
   

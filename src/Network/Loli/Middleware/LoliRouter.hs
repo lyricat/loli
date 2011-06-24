@@ -34,7 +34,7 @@ parse_params :: String -> String -> Maybe (String, Assoc)
 parse_params "" ""  = Just ("", [])
 parse_params "" _   = Nothing
 parse_params "/" "" = Nothing
-parse_params "/" _  = Just ("/", [])
+parse_params "/" "/"  = Just ("/", [])
 
 parse_params t s = 
   let template_tokens = t.split "/"
@@ -43,19 +43,24 @@ parse_params t s =
   if url_tokens.length P.< template_tokens.length
     then Nothing
     else 
-      let rs = zipWith capture template_tokens url_tokens
-      in
-      if rs.all isJust
-        then 
-          let token_length = template_tokens.length
-              location     = "/" / url_tokens.take token_length .join "/"
+      if not - ( template_tokens.length P.> 0 && template_tokens.last.is "*" ) || (template_tokens.length == url_tokens.length)
+        then
+          Nothing
+        else 
+          let rs = zipWith capture template_tokens url_tokens
           in
-          Just - (location, rs.catMaybes.catMaybes)
-        else Nothing
+          if rs.all isJust
+            then 
+              let token_length = template_tokens.length
+                  location     = "/" / url_tokens.take token_length .join "/"
+              in
+              Just - (location, rs.catMaybes.catMaybes)
+            else Nothing
   
   where
     capture x y 
       | x.starts_with ":" = Just - Just (x.tail, y)
+      | x.is "*" = Just Nothing
       | x == y = Just Nothing
       | otherwise = Nothing
       
